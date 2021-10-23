@@ -4,20 +4,20 @@ interface ButtonProps {
   color: 'primary' | 'secondary';
 }
 
-const Button = styled.button.attrs<ButtonProps>({
-  color: 'primary',
-})<ButtonProps>`
-  background: ${(props) => props.theme.colors[props.color].main};
+const Button = styled.button.attrs<ButtonProps>((props) => ({
+  color: props.color || 'primary',
+}))<ButtonProps>`
+  background: ${({ theme, color }) => theme.colors[color].main};
   border: none;
-  padding: 5px 10px;
-  font-size: 100px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
   color: #fff;
-  border-radius: 4px;
+  border-radius: 0.25rem;
   box-shadow: 11px 11px 29px -12px rgba(34, 60, 80, 0.2);
   cursor: pointer;
   transition: all 0.1s linear;
   &:hover {
-    background: black;
+    background: ${({ theme, color }) => theme.colors[color].dark};
     box-shadow: 100% 100% 6px -14px rgba(34, 60, 80, 0.2);
   }
 `;
