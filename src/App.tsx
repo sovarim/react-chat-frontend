@@ -1,12 +1,16 @@
 import { FC } from 'react';
-import { Button } from './components';
 import './i18n';
+import { ThemeProvider } from 'styled-components';
+import { light } from './theme';
+import { Button } from './components';
 
 const App: FC = () => {
   return (
-    <div className="App">
-      <Button>CLick</Button>
-    </div>
+    <ThemeProvider theme={light}>
+      <div className="App">
+        <Button color="primary">CLick</Button>
+      </div>
+    </ThemeProvider>
   );
 };
 
