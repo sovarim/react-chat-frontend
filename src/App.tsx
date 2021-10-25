@@ -10,9 +10,11 @@ const App: FC = () => {
     <ThemeProvider theme={light}>
       <GlobalStyle />
       <div className="App">
-        <Button color="primary">Login</Button>
+        <Button fullWidth color="primary">
+          Login
+        </Button>
         <div style={{ marginTop: 8 }}></div>
-        <Input color="secondary" />
+        <Input id="input" color="primary" label="Login" />
       </div>
     </ThemeProvider>
   );

@@ -21,6 +21,7 @@ declare module 'styled-components' {
       background: string;
       border: string;
       text: string;
+      label: string;
     };
     breakpoints: IBreakpoints;
   }
