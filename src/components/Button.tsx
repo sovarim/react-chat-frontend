@@ -1,7 +1,7 @@
 import styled, { css } from 'styled-components';
 
 interface ButtonProps {
-  color: 'primary' | 'secondary';
+  color?: 'primary' | 'secondary';
   fullWidth?: boolean;
 }
 
@@ -9,7 +9,7 @@ const Button = styled.button.attrs<ButtonProps>((props) => ({
   color: props.color || 'primary',
   fullWidth: props.fullWidth || false,
 }))<ButtonProps>`
-  background: ${({ theme, color }) => theme.colors[color].main};
+  background: ${({ theme, color }) => color && theme.colors[color].main};
   border: none;
   padding: 0.5rem 1rem;
   font-size: 0.875rem;
@@ -24,7 +24,7 @@ const Button = styled.button.attrs<ButtonProps>((props) => ({
       width: 100%;
     `}
   &:hover {
-    background: ${({ theme, color }) => theme.colors[color].dark};
+    background: ${({ theme, color }) => color && theme.colors[color].dark};
     box-shadow: 100% 100% 6px -14px rgba(34, 60, 80, 0.2);
   }
 `;

@@ -5,7 +5,7 @@ type Color = 'primary' | 'secondary';
 
 interface StyledFieldsetProps {
   focus: boolean;
-  color: Color;
+  color?: Color;
   filled: boolean;
 }
 
@@ -20,7 +20,7 @@ interface WrapperProps {
 }
 
 interface InputProps {
-  color: Color;
+  color?: Color;
   label: string;
   id: string;
   fullWidth?: boolean;
@@ -29,7 +29,6 @@ interface InputProps {
 const Wrapper = styled.div<WrapperProps>`
   position: relative;
   min-height: 0px;
-  margin: 1rem;
   max-width: 400px;
   ${(props) =>
     props.fullWidth &&
@@ -38,7 +37,9 @@ const Wrapper = styled.div<WrapperProps>`
     `}
 `;
 
-const StyledFieldset = styled.fieldset<StyledFieldsetProps>`
+const StyledFieldset = styled.fieldset.attrs<StyledFieldsetProps>((props) => ({
+  color: props.color || 'primary',
+}))<StyledFieldsetProps>`
   border-radius: 0.25rem;
   margin: 0;
   padding: 0 0.5rem;
@@ -53,7 +54,7 @@ const StyledFieldset = styled.fieldset<StyledFieldsetProps>`
   ${(props) =>
     (props.focus || props.filled) &&
     css`
-      border-color: ${props.theme.colors[props.color].main} !important;
+      border-color: ${props.color && props.theme.colors[props.color].main} !important;
       border-width: 2px;
     `}
   & legend {
@@ -66,7 +67,7 @@ const StyledFieldset = styled.fieldset<StyledFieldsetProps>`
     ${(props) =>
       (props.focus || props.filled) &&
       css`
-        color: ${props.theme.colors[props.color].main};
+        color: ${props.color && props.theme.colors[props.color].main};
       `}
   }
 `;
