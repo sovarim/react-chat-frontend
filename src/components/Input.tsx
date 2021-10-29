@@ -1,4 +1,4 @@
-import { FC, useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef, useEffect, HTMLAttributes } from 'react';
 import styled, { css } from 'styled-components';
 
 type Color = 'primary' | 'secondary';
@@ -19,11 +19,12 @@ interface WrapperProps {
   fullWidth: boolean;
 }
 
-interface InputProps {
+interface InputProps extends HTMLAttributes<HTMLInputElement> {
   color?: Color;
   label: string;
   id: string;
   fullWidth?: boolean;
+  value?: string | number | undefined;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -108,7 +109,14 @@ const StyledLabel = styled.label<StyledLabelProps>`
     `}
 `;
 
-const Input: FC<InputProps> = ({ fullWidth = false, color = 'primary', label, id, ...other }) => {
+const Input: FC<InputProps> = ({
+  fullWidth = false,
+  color = 'primary',
+  label,
+  id,
+  value,
+  ...other
+}) => {
   const [focus, setFocus] = useState<boolean>(false);
   const [filled, setFilled] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -122,16 +130,19 @@ const Input: FC<InputProps> = ({ fullWidth = false, color = 'primary', label, id
   };
 
   useEffect(() => {
+    if (inputRef.current?.value) {
+      onFocus();
+    }
     const checkFilled = (e: any) => {
-      if (e.target.value) {
+      if (e.target?.value) {
         setFilled(true);
         return;
       }
       setFilled(false);
     };
-    inputRef.current?.addEventListener('input', checkFilled);
+    inputRef.current?.addEventListener('change', checkFilled);
 
-    return () => inputRef.current?.removeEventListener('input', checkFilled);
+    return () => inputRef.current?.removeEventListener('change', checkFilled);
   }, []);
 
   return (
@@ -141,10 +152,10 @@ const Input: FC<InputProps> = ({ fullWidth = false, color = 'primary', label, id
       </StyledLabel>
       <StyledInput
         id={id}
-        color={color}
         onFocus={onFocus}
         onBlur={onBlur}
         ref={inputRef}
+        value={value}
         {...other}
       />
       <StyledFieldset focus={focus} filled={filled} color={color}>
