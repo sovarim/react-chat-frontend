@@ -11,12 +11,15 @@ const Button = styled.button.attrs<ButtonProps>((props) => ({
 }))<ButtonProps>`
   background: ${({ theme, color }) => color && theme.colors[color].main};
   border: none;
-  padding: 0.5rem 1rem;
+  padding: 0.75rem 1rem;
   font-size: 0.875rem;
   color: #fff;
   border-radius: 0.25rem;
   cursor: pointer;
   transition: all 0.1s linear;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  font-weight: 600;
   ${(props) =>
     props.fullWidth &&
     css`

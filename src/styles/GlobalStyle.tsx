@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    color: #333;
+    color: ${({ theme }) => theme.colors.text};
     margin: 0;
     padding: 0;
     width: 100%;
@@ -31,6 +31,11 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
   }
+
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+  }
+
 `;
 
 export default GlobalStyle;

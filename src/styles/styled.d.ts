@@ -13,6 +13,17 @@ export interface IBreakpoints {
   mobile: string;
 }
 
+export interface ITypography {
+  h1: string;
+  h2: string;
+  h3: string;
+  text: string;
+}
+
+export interface IShape {
+  borderRadius: string;
+}
+
 declare module 'styled-components' {
   export interface DefaultTheme {
     colors: {
@@ -22,7 +33,11 @@ declare module 'styled-components' {
       border: string;
       text: string;
       label: string;
+      white: string;
     };
     breakpoints: IBreakpoints;
+    typography: ITypography;
+    shadows: string[];
+    shape: IShape;
   }
 }

@@ -1,7 +1,5 @@
 import React, { FC } from 'react';
-import { faSignInAlt } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { Icon, Text } from '../components';
 
 interface AuthLayoutProps {
   children: React.ReactNode | React.ReactChildren;
@@ -9,29 +7,31 @@ interface AuthLayoutProps {
 
 const Wrapper = styled.div`
   display: flex;
-  height: 100%;
   width: 100%;
   justify-content: center;
-  align-items: center;
+  padding: 5rem 0.5rem 0.5rem 0.5rem;
+  height: 100%;
+  background: ${({ theme }) => theme.colors.primary.light};
 `;
 
 const Container = styled.div`
   flex: 1 1 auto;
-  max-width: 800px;
-  border: 1px solid black;
+  max-width: 400px;
+  height: max-content;
   display: flex;
   align-items: center;
   flex-direction: column;
+  box-shadow: ${({ theme }) => theme.shadows[0]};
+  background: ${({ theme }) => theme.colors.white};
+  border-radius: ${({ theme }) => theme.shape.borderRadius};
+  padding: 1rem;
 `;
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
   console.log(children);
   return (
     <Wrapper>
-      <Container>
-        <Icon icon={faSignInAlt} size="3x" display="block" />
-        <Text as="h1">asd</Text>
-      </Container>
+      <Container>{children}</Container>
     </Wrapper>
   );
 };

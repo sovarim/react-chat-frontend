@@ -21,10 +21,12 @@ interface WrapperProps {
 
 interface InputProps extends HTMLAttributes<HTMLInputElement> {
   color?: Color;
-  label: string;
-  id: string;
+  label?: string;
+  id?: string;
   fullWidth?: boolean;
   value?: string | number | undefined;
+  className?: string;
+  name?: string;
 }
 
 const Wrapper = styled.div<WrapperProps>`
@@ -41,7 +43,7 @@ const Wrapper = styled.div<WrapperProps>`
 const StyledFieldset = styled.fieldset.attrs<StyledFieldsetProps>((props) => ({
   color: props.color || 'primary',
 }))<StyledFieldsetProps>`
-  border-radius: 0.25rem;
+  border-radius: ${({ theme }) => theme.shape.borderRadius};
   margin: 0;
   padding: 0 0.5rem;
   position: absolute;
@@ -80,8 +82,9 @@ const StyledInput = styled.input`
   border: none;
   width: 100%;
   font-size: 1rem;
-  border-radius: 0.25rem;
+  border-radius: ${({ theme }) => theme.shape.borderRadius};
   font-weight: 400;
+  background: ${({ theme }) => theme.colors.white};
   &::placeholder {
     color: ${({ theme }) => theme.colors.border};
   }
@@ -112,9 +115,11 @@ const StyledLabel = styled.label<StyledLabelProps>`
 const Input: FC<InputProps> = ({
   fullWidth = false,
   color = 'primary',
-  label,
-  id,
+  label = 'Label',
+  id = 'id',
+  name = 'name',
   value,
+  className,
   ...other
 }) => {
   const [focus, setFocus] = useState<boolean>(false);
@@ -146,12 +151,13 @@ const Input: FC<InputProps> = ({
   }, []);
 
   return (
-    <Wrapper fullWidth={fullWidth}>
+    <Wrapper fullWidth={fullWidth} className={className}>
       <StyledLabel htmlFor={id} focus={focus} filled={filled} color={color}>
         {label}
       </StyledLabel>
       <StyledInput
         id={id}
+        name={name}
         onFocus={onFocus}
         onBlur={onBlur}
         ref={inputRef}

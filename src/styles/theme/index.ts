@@ -1,4 +1,4 @@
-import { IBreakpoints } from './../styled.d';
+import { IBreakpoints, IShape, ITypography } from './../styled.d';
 import { DefaultTheme } from 'styled-components';
 
 const breakpoints: IBreakpoints = {
@@ -8,7 +8,31 @@ const breakpoints: IBreakpoints = {
   mobile: `@media (max-width: 425px)`,
 };
 
+const shadows: string[] = [
+  '0px 1px 4px 0px rgba(0, 0, 0, 0.14)',
+  '0px 1px 8px 0px rgba(0, 0, 0, 0.14)',
+];
+
+const shape: IShape = {
+  borderRadius: '0.25rem',
+};
+
+const typography: ITypography = {
+  text: '1rem',
+  h1: '4rem',
+  h2: '2.25rem',
+  h3: '1.5rem',
+};
+
+const common = {
+  breakpoints,
+  shadows,
+  shape,
+  typography,
+};
+
 export const light: DefaultTheme = {
+  ...common,
   colors: {
     primary: {
       light: '#357eee',
@@ -24,11 +48,12 @@ export const light: DefaultTheme = {
     background: '#f2f2f2',
     text: '#333',
     label: 'rgba(0, 0, 0, .6)',
+    white: '#fff',
   },
-  breakpoints,
 };
 
 export const dark: DefaultTheme = {
+  ...common,
   colors: {
     primary: {
       light: '#0b6e8d',
@@ -44,6 +69,6 @@ export const dark: DefaultTheme = {
     background: '#323232',
     text: '#333',
     label: '#3d3d3d',
+    white: '#fff',
   },
-  breakpoints,
 };
