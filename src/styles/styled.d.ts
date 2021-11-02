@@ -18,6 +18,7 @@ export interface ITypography {
   h2: string;
   h3: string;
   text: string;
+  text2: string;
 }
 
 export interface IShape {
@@ -34,6 +35,7 @@ declare module 'styled-components' {
       text: string;
       label: string;
       white: string;
+      error: string;
     };
     breakpoints: IBreakpoints;
     typography: ITypography;

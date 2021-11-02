@@ -19,6 +19,7 @@ const shape: IShape = {
 
 const typography: ITypography = {
   text: '1rem',
+  text2: '0.875rem',
   h1: '4rem',
   h2: '2.25rem',
   h3: '1.5rem',
@@ -49,6 +50,7 @@ export const light: DefaultTheme = {
     text: '#333',
     label: 'rgba(0, 0, 0, .6)',
     white: '#fff',
+    error: '#fd4d4d',
   },
 };
 
@@ -70,5 +72,6 @@ export const dark: DefaultTheme = {
     text: '#333',
     label: '#3d3d3d',
     white: '#fff',
+    error: '#fd4d4d',
   },
 };

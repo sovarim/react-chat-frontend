@@ -2,5 +2,6 @@
   "Sign in": "Sign in",
   "Username": "Username",
   "Password": "Password",
-  "Login": "Sign in"
+  "Login": "Sign in",
+  "required field": "required field"
 }

@@ -5,34 +5,40 @@ interface AuthLayoutProps {
   children: React.ReactNode | React.ReactChildren;
 }
 
-const Wrapper = styled.div`
+const Root = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
-  padding: 5rem 0.5rem 0.5rem 0.5rem;
   height: 100%;
-  background: ${({ theme }) => theme.colors.primary.light};
+  /* background: ${({ theme }) => theme.colors.primary.light}; */
 `;
 
-const Container = styled.div`
+const Wrapper = styled.div`
   flex: 1 1 auto;
-  max-width: 400px;
-  height: max-content;
+  max-width: 1440px;
+  min-height: 100%;
+  padding: 0 0.5rem;
   display: flex;
-  align-items: center;
-  flex-direction: column;
+  overflow: auto;
   box-shadow: ${({ theme }) => theme.shadows[0]};
   background: ${({ theme }) => theme.colors.white};
   border-radius: ${({ theme }) => theme.shape.borderRadius};
-  padding: 1rem;
+`;
+
+const Container = styled.section`
+  flex: 1 1 400px;
+  max-width: 400px;
+  margin: auto;
+  padding-bottom: 4rem;
 `;
 
 const AuthLayout: FC<AuthLayoutProps> = ({ children }) => {
-  console.log(children);
   return (
-    <Wrapper>
-      <Container>{children}</Container>
-    </Wrapper>
+    <Root>
+      <Wrapper>
+        <Container>{children}</Container>
+      </Wrapper>
+    </Root>
   );
 };
 

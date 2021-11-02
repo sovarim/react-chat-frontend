@@ -28,18 +28,18 @@ const initialValues: IFormValues = {
   password: '',
 };
 
-const validationSchema = Yup.object().shape({
-  username: Yup.string().min(4).max(20).required('Required'),
-  password: Yup.string().required('Required'),
-});
-
 const LoginForm: FC = () => {
   const { t } = useTranslation();
-  const { values, handleChange, handleSubmit } = useFormik({
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required(t('required field')),
+    password: Yup.string().required(t('required field')),
+  });
+  const { values, errors, touched, handleBlur, handleChange, handleSubmit } = useFormik({
     initialValues,
     validationSchema,
     onSubmit: (values) => console.log(values),
   });
+
   return (
     <Form onSubmit={handleSubmit}>
       <Icon icon={faSignInAlt} size="3x" display="block" />
@@ -49,17 +49,23 @@ const LoginForm: FC = () => {
       <StyledInput
         value={values.username}
         onChange={handleChange}
+        onBlur={handleBlur}
         id="username"
         name="username"
         label={t('Username')}
+        error={!!errors.username && !!touched.username}
+        errorText={touched.username && errors.username}
         fullWidth
       />
       <StyledInput
         value={values.password}
         onChange={handleChange}
+        onBlur={handleBlur}
         id="password"
         name="password"
         label={t('Password')}
+        error={!!errors.password && !!touched.password}
+        errorText={touched.password && errors.password}
         fullWidth
       />
       <Button type="submit" fullWidth>

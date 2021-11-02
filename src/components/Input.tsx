@@ -1,21 +1,24 @@
-import { FC, useState, useRef, useEffect, HTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import React, { FC, useState, useRef, useEffect, HTMLAttributes } from 'react';
+import styled, { css } from 'styled-components/macro';
+import Text from './Text';
 
 type Color = 'primary' | 'secondary';
 
 interface StyledFieldsetProps {
   focus: boolean;
-  color?: Color;
+  color: Color;
   filled: boolean;
+  error: boolean;
 }
 
 interface StyledLabelProps {
   focus: boolean;
   color: Color;
   filled: boolean;
+  error: boolean;
 }
 
-interface WrapperProps {
+interface ContainerProps {
   fullWidth: boolean;
 }
 
@@ -27,9 +30,16 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
   value?: string | number | undefined;
   className?: string;
   name?: string;
+  error?: boolean;
+  errorText?: string | boolean;
 }
 
-const Wrapper = styled.div<WrapperProps>`
+const Wrapper = styled.div`
+  display: block;
+  text-align: left;
+`;
+
+const Container = styled.div<ContainerProps>`
   position: relative;
   min-height: 0px;
   max-width: 400px;
@@ -58,6 +68,12 @@ const StyledFieldset = styled.fieldset.attrs<StyledFieldsetProps>((props) => ({
     (props.focus || props.filled) &&
     css`
       border-color: ${props.color && props.theme.colors[props.color].main} !important;
+      border-width: 2px;
+    `}
+  ${(props) =>
+    props.error &&
+    css`
+      border-color: ${props.theme.colors.error} !important;
       border-width: 2px;
     `}
   & legend {
@@ -110,6 +126,11 @@ const StyledLabel = styled.label<StyledLabelProps>`
       color: ${props.theme.colors[props.color].main};
       transform: translate(3px, -8px) scale(0.75);
     `}
+  ${(props) =>
+    props.error &&
+    css`
+      color: ${props.theme.colors.error} !important;
+    `}
 `;
 
 const Input: FC<InputProps> = ({
@@ -119,6 +140,8 @@ const Input: FC<InputProps> = ({
   id = 'id',
   name = 'name',
   value,
+  error = false,
+  errorText,
   className,
   ...other
 }) => {
@@ -127,6 +150,8 @@ const Input: FC<InputProps> = ({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onFocus = () => {
+    console.log('focus');
+
     setFocus(true);
   };
 
@@ -134,39 +159,52 @@ const Input: FC<InputProps> = ({
     setFocus(false);
   };
 
+  const checkFilled = (e: any) => {
+    if (e.target?.value) {
+      setFilled(true);
+      return;
+    }
+    setFilled(false);
+  };
+
   useEffect(() => {
     if (inputRef.current?.value) {
       onFocus();
     }
-    const checkFilled = (e: any) => {
-      if (e.target?.value) {
-        setFilled(true);
-        return;
-      }
-      setFilled(false);
-    };
-    inputRef.current?.addEventListener('change', checkFilled);
 
-    return () => inputRef.current?.removeEventListener('change', checkFilled);
+    inputRef.current?.addEventListener('change', checkFilled);
+    inputRef.current?.addEventListener('blur', onBlur);
+    inputRef.current?.addEventListener('focus', onFocus);
+
+    return () => {
+      inputRef.current?.removeEventListener('change', checkFilled);
+      inputRef.current?.removeEventListener('blur', onBlur);
+      inputRef.current?.removeEventListener('focus', onFocus);
+    };
   }, []);
 
   return (
-    <Wrapper fullWidth={fullWidth} className={className}>
-      <StyledLabel htmlFor={id} focus={focus} filled={filled} color={color}>
-        {label}
-      </StyledLabel>
-      <StyledInput
-        id={id}
-        name={name}
-        onFocus={onFocus}
-        onBlur={onBlur}
-        ref={inputRef}
-        value={value}
-        {...other}
-      />
-      <StyledFieldset focus={focus} filled={filled} color={color}>
-        {(focus || filled) && <legend>{label}</legend>}
-      </StyledFieldset>
+    <Wrapper className={className}>
+      <Container fullWidth={fullWidth}>
+        <StyledLabel htmlFor={id} focus={focus} filled={filled} color={color} error={error}>
+          {label}
+        </StyledLabel>
+        <StyledInput id={id} name={name} ref={inputRef} value={value} {...other} />
+        <StyledFieldset focus={focus} filled={filled} color={color} error={error}>
+          {(focus || filled) && <legend>{label}</legend>}
+        </StyledFieldset>
+      </Container>
+      {error && (
+        <Text
+          css={css`
+            color: ${({ theme }) => theme.colors.error};
+            padding-left: 0.5rem;
+          `}
+          variant="text2"
+        >
+          {errorText}
+        </Text>
+      )}
     </Wrapper>
   );
 };

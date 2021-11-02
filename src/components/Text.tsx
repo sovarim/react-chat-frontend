@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 interface TextProps {
-  variant?: 'text' | 'h1' | 'h2' | 'h3';
+  variant?: 'text' | 'text2' | 'h1' | 'h2' | 'h3';
 }
 
 const Text = styled.p.attrs<TextProps>((props) => ({
