@@ -27,6 +27,7 @@ export interface IShape {
 
 declare module 'styled-components' {
   export interface DefaultTheme {
+    name: string;
     colors: {
       primary: IColor;
       secondary: IColor;

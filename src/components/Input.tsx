@@ -27,11 +27,11 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
   label?: string;
   id?: string;
   fullWidth?: boolean;
-  value?: string | number | undefined;
+  value?: string;
   className?: string;
   name?: string;
   error?: boolean;
-  errorText?: string | boolean;
+  errorText?: string;
 }
 
 const Wrapper = styled.div`
@@ -59,7 +59,7 @@ const StyledFieldset = styled.fieldset.attrs<StyledFieldsetProps>((props) => ({
   position: absolute;
   right: 0;
   left: 0;
-  top: ${(props) => (props.focus || props.filled ? `-8px` : 0)};
+  top: ${(props) => (props.focus || props.filled ? `-7px` : 0)};
   bottom: 0;
   pointer-events: none;
   border: 1px solid ${({ theme }) => theme.colors.border};
@@ -100,7 +100,7 @@ const StyledInput = styled.input`
   font-size: 1rem;
   border-radius: ${({ theme }) => theme.shape.borderRadius};
   font-weight: 400;
-  background: ${({ theme }) => theme.colors.white};
+  background: transparent;
   &::placeholder {
     color: ${({ theme }) => theme.colors.border};
   }
@@ -143,15 +143,13 @@ const Input: FC<InputProps> = ({
   error = false,
   errorText,
   className,
-  ...other
+  ...props
 }) => {
   const [focus, setFocus] = useState<boolean>(false);
   const [filled, setFilled] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onFocus = () => {
-    console.log('focus');
-
     setFocus(true);
   };
 
@@ -189,7 +187,7 @@ const Input: FC<InputProps> = ({
         <StyledLabel htmlFor={id} focus={focus} filled={filled} color={color} error={error}>
           {label}
         </StyledLabel>
-        <StyledInput id={id} name={name} ref={inputRef} value={value} {...other} />
+        <StyledInput id={id} name={name} ref={inputRef} value={value} {...props} />
         <StyledFieldset focus={focus} filled={filled} color={color} error={error}>
           {(focus || filled) && <legend>{label}</legend>}
         </StyledFieldset>

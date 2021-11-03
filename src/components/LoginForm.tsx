@@ -54,7 +54,7 @@ const LoginForm: FC = () => {
         name="username"
         label={t('Username')}
         error={!!errors.username && !!touched.username}
-        errorText={touched.username && errors.username}
+        errorText={errors.username}
         fullWidth
       />
       <StyledInput
@@ -65,7 +65,7 @@ const LoginForm: FC = () => {
         name="password"
         label={t('Password')}
         error={!!errors.password && !!touched.password}
-        errorText={touched.password && errors.password}
+        errorText={errors.password}
         fullWidth
       />
       <Button type="submit" fullWidth>

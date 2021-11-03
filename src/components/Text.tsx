@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-interface TextProps {
+export interface TextProps {
   variant?: 'text' | 'text2' | 'h1' | 'h2' | 'h3';
 }
 

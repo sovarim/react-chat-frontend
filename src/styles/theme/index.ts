@@ -34,6 +34,7 @@ const common = {
 
 export const light: DefaultTheme = {
   ...common,
+  name: 'Light Theme',
   colors: {
     primary: {
       light: '#357eee',
@@ -56,10 +57,11 @@ export const light: DefaultTheme = {
 
 export const dark: DefaultTheme = {
   ...common,
+  name: 'Dark Theme',
   colors: {
     primary: {
       light: '#0b6e8d',
-      main: '#084c61',
+      main: '#214f95',
       dark: '#073e4f',
     },
     secondary: {
