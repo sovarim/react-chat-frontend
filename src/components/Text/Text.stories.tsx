@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Text } from '../components';
-import { TextProps } from '../components/Text';
+import Text, { TextProps } from './Text';
 
 export default {
   title: 'Components/Text',

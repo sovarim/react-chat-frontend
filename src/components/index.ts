@@ -1,7 +1,7 @@
-import Button from './Button';
-import Text from './Text';
-import Input from './Input';
-import Icon from './Icon';
-import LoginForm from './LoginForm';
+import Button from './Button/Button';
+import Text from './Text/Text';
+import Input from './Input/Input';
+import Icon from './Icon/Icon';
+import LoginForm from './LoginForm/LoginForm';
 
 export { Button, Input, Icon, Text, LoginForm };

@@ -18,4 +18,4 @@ export const decorators = [
   ),
 ];
 
-configure(require.context('../src/stories', true, /\.stories\.js$/), module);
+configure(require.context('../src', true, /\.stories\.js$/), module);

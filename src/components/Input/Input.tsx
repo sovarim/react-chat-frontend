@@ -1,6 +1,6 @@
 import React, { FC, useState, useRef, useEffect, HTMLAttributes } from 'react';
 import styled, { css } from 'styled-components/macro';
-import Text from './Text';
+import Text from '../Text/Text';
 
 type Color = 'primary' | 'secondary';
 
@@ -98,6 +98,7 @@ const StyledInput = styled.input`
   border: none;
   width: 100%;
   font-size: 1rem;
+  font-weight: 600;
   border-radius: ${({ theme }) => theme.shape.borderRadius};
   font-weight: 400;
   background: transparent;
@@ -115,7 +116,7 @@ const StyledLabel = styled.label<StyledLabelProps>`
   pointer-events: none;
   top: 0;
   left: 0;
-  font-weight: 500;
+  font-weight: 400;
   transform: translateY(13px) scale(1);
   transform-origin: top left;
   transition: transform 0.2s linear;
