@@ -1,4 +1,4 @@
-import React, { FC, useState, useRef, useEffect, HTMLAttributes } from 'react';
+import { FC, useState, useRef, useEffect, HTMLAttributes } from 'react';
 import styled, { css } from 'styled-components/macro';
 import Text from '../Text/Text';
 

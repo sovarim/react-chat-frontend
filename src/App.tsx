@@ -3,16 +3,16 @@ import './i18n';
 import { ThemeProvider } from 'styled-components';
 import GlobalStyle from './styles/GlobalStyle';
 import { light } from './styles/theme';
-import { LoginForm } from './components';
-import AuthLayout from './layouts/AuthLayout';
+import MainLayout from './layouts/MainLayout';
+import Login from './pages/Login/Login';
 
 const App: FC = () => {
   return (
     <ThemeProvider theme={light}>
       <GlobalStyle />
-      <AuthLayout>
-        <LoginForm />
-      </AuthLayout>
+      <MainLayout>
+        <Login />
+      </MainLayout>
     </ThemeProvider>
   );
 };

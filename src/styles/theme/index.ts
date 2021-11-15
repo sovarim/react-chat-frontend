@@ -37,9 +37,9 @@ export const light: DefaultTheme = {
   name: 'Light Theme',
   colors: {
     primary: {
-      light: '#357eee',
-      main: '#2d6ac7',
-      dark: '#214f95',
+      light: '#ce28fd',
+      main: '#9520b6',
+      dark: '#5f1374',
     },
     secondary: {
       light: '#ff5f59',
