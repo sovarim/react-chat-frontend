@@ -52,6 +52,7 @@ export const light: DefaultTheme = {
     label: 'rgba(0, 0, 0, .6)',
     white: '#fff',
     error: '#fd4d4d',
+    black: '#000',
   },
 };
 
@@ -73,7 +74,8 @@ export const dark: DefaultTheme = {
     background: '#323232',
     text: '#333',
     label: '#3d3d3d',
-    white: '#fff',
+    white: '#000',
     error: '#fd4d4d',
+    black: '#fff',
   },
 };

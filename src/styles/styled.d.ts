@@ -37,6 +37,7 @@ declare module 'styled-components' {
       label: string;
       white: string;
       error: string;
+      black: string;
     };
     breakpoints: IBreakpoints;
     typography: ITypography;
