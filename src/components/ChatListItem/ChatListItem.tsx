@@ -1,17 +1,18 @@
 import { FC } from 'react';
 import { css } from 'styled-components/macro';
-import { ItemContainer, DetailContainer, LastMessage } from './ChatListItem.styles';
+import { ItemRoot, DetailContainer, LastMessage } from './ChatListItem.styles';
 import Text from '../Text/Text';
 import Avatar from '../Avatar/Avatar';
 
 interface ChatListItemProps {
   chatName: string;
   lastMessage?: string;
+  isActive?: boolean;
 }
 
-const ChatListItem: FC<ChatListItemProps> = ({ chatName, lastMessage }) => {
+const ChatListItem: FC<ChatListItemProps> = ({ chatName, lastMessage, isActive = false }) => {
   return (
-    <ItemContainer>
+    <ItemRoot isActive={isActive}>
       <Avatar
         css={css`
           margin: 0 0.75rem;
@@ -28,7 +29,7 @@ const ChatListItem: FC<ChatListItemProps> = ({ chatName, lastMessage }) => {
           <LastMessage>{lastMessage}</LastMessage>
         </span>
       </DetailContainer>
-    </ItemContainer>
+    </ItemRoot>
   );
 };
 

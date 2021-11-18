@@ -14,7 +14,7 @@ const shadows: string[] = [
 ];
 
 const shape: IShape = {
-  borderRadius: '0.25rem',
+  borderRadius: '0.5rem',
 };
 
 const typography: ITypography = {

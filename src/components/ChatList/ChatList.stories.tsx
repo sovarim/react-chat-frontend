@@ -20,6 +20,7 @@ const chats = [
   {
     chatName: 'Петр Петрович',
     lastMessage: 'Как ты?',
+    isActive: true,
   },
   {
     chatName: 'Sovarim',
@@ -40,12 +41,12 @@ const chats = [
   },
 ];
 
-const Template: ComponentStory<typeof ChatList> = (args) => {
+const Template: ComponentStory<typeof ChatList> = () => {
   return (
     <div style={{ maxWidth: 400, background: '#fff', overflow: 'hidden', height: '100%' }}>
       <ChatList>
-        {chats.map(({ lastMessage, chatName }, idx) => (
-          <ChatListItem key={idx} chatName={chatName} lastMessage={lastMessage} />
+        {chats.map((props, idx) => (
+          <ChatListItem key={idx} {...props} />
         ))}
       </ChatList>
     </div>

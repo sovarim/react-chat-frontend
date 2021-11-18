@@ -1,16 +1,16 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-interface AvatarContainerProps {
+interface AvatarRootProps {
   isSmall?: boolean;
 }
 
-interface AvatarProps extends AvatarContainerProps {
+interface AvatarProps extends AvatarRootProps {
   imgSrc?: string;
   className?: string;
 }
 
-const AvatarContainer = styled.div<AvatarContainerProps>`
+const AvatarRoot = styled.div<AvatarRootProps>`
   display: inline-flex;
   width: ${({ isSmall }) => (isSmall ? '40px' : '50px')};
   height: ${({ isSmall }) => (isSmall ? '40px' : '50px')};
@@ -33,9 +33,9 @@ const AvatarImage = styled.img`
 
 const Avatar: FC<AvatarProps> = ({ imgSrc, isSmall, className }) => {
   return (
-    <AvatarContainer className={className} isSmall={isSmall}>
+    <AvatarRoot className={className} isSmall={isSmall}>
       {(imgSrc && <AvatarImage src={imgSrc} />) || 'A'}
-    </AvatarContainer>
+    </AvatarRoot>
   );
 };
 

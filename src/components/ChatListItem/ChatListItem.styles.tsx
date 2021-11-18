@@ -1,11 +1,21 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import Text from '../Text/Text';
 
-export const ItemContainer = styled.div`
+interface ItemRootProps {
+  isActive: boolean;
+}
+
+export const ItemRoot = styled.div<ItemRootProps>`
   display: flex;
   overflow: hidden;
   cursor: pointer;
   transition: all 0.1s ease-in-out;
+  padding: 0.5rem 0;
+  ${({ isActive, theme }) =>
+    isActive &&
+    css`
+      background: ${theme.colors.primary.main}24;
+    `}
   &:hover {
     background: ${({ theme }) => theme.colors.primary.main}24;
   }

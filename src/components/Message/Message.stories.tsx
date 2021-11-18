@@ -1,0 +1,30 @@
+import { ComponentStory, ComponentMeta } from '@storybook/react';
+import Message from './Message';
+import { css } from 'styled-components/macro';
+
+export default {
+  title: 'Components/Message',
+  component: Message,
+} as ComponentMeta<typeof Message>;
+
+const Template: ComponentStory<typeof Message> = (args) => {
+  return (
+    <div
+      css={css`
+        padding: 1rem;
+        background: #fff;
+        width: 100%;
+        max-width: 600px;
+        border-radius: 0.25rem;
+      `}
+    >
+      <Message {...args} />
+    </div>
+  );
+};
+
+export const Default = Template.bind({});
+Default.args = {
+  children: 'Как ты?',
+  isMe: true,
+};

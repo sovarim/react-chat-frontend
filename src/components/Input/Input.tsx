@@ -34,7 +34,7 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
   errorText?: string;
 }
 
-const Wrapper = styled.div`
+const Root = styled.div`
   display: block;
   text-align: left;
 `;
@@ -183,7 +183,7 @@ const Input: FC<InputProps> = ({
   }, []);
 
   return (
-    <Wrapper className={className}>
+    <Root className={className}>
       <Container fullWidth={fullWidth}>
         <StyledLabel htmlFor={id} focus={focus} filled={filled} color={color} error={error}>
           {label}
@@ -204,7 +204,7 @@ const Input: FC<InputProps> = ({
           {errorText}
         </Text>
       )}
-    </Wrapper>
+    </Root>
   );
 };
 
