@@ -22,11 +22,12 @@ const MessageRoot = styled.div<Omit<MessageProps, 'children'>>`
 const MessageText = styled.span<Omit<MessageProps, 'children'>>`
   white-space: pre-wrap;
   word-break: break-word;
-  padding: 0.5rem;
-  background: ${({ theme }) => theme.colors.primary.light};
-  border: 1px solid ${({ theme }) => theme.colors.primary.main};
-  color: #fff;
+  padding: 0.75rem;
+  background-color: ${({ theme }) => theme.colors.white};
+  color: ${({ theme }) => theme.colors.black};
+  font-size: ${({ theme }) => theme.typography.text2};
   max-width: 80%;
+  box-shadow: ${({ theme }) => theme.shadows[1]};
   ${({ isMe }) =>
     !isMe
       ? css`

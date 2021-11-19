@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 interface ChatListProps {
   children?: React.ReactNode | React.ReactChildren;
@@ -7,12 +8,14 @@ interface ChatListProps {
 
 const Root = styled.div`
   width: 100%;
-  height: 100%;
-  overflow: auto;
 `;
 
 const ChatList: FC<ChatListProps> = ({ children }) => {
-  return <Root>{children}</Root>;
+  return (
+    <PerfectScrollbar>
+      <Root>{children}</Root>
+    </PerfectScrollbar>
+  );
 };
 
 export default ChatList;

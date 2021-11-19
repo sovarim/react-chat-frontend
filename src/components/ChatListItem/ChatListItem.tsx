@@ -8,9 +8,15 @@ interface ChatListItemProps {
   chatName: string;
   lastMessage?: string;
   isActive?: boolean;
+  avatarSrc?: string;
 }
 
-const ChatListItem: FC<ChatListItemProps> = ({ chatName, lastMessage, isActive = false }) => {
+const ChatListItem: FC<ChatListItemProps> = ({
+  chatName,
+  lastMessage,
+  isActive = false,
+  avatarSrc,
+}) => {
   return (
     <ItemRoot isActive={isActive}>
       <Avatar
@@ -18,6 +24,8 @@ const ChatListItem: FC<ChatListItemProps> = ({ chatName, lastMessage, isActive =
           margin: 0 0.75rem;
           flex-shrink: 0;
         `}
+        imgSrc={avatarSrc}
+        alt={chatName[0]}
       />
       <DetailContainer>
         <Text variant="text">{chatName}</Text>

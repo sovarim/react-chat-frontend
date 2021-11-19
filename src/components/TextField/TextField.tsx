@@ -9,19 +9,26 @@ interface TextFieldProps extends HTMLProps {
   icon?: React.ReactChildren | React.ReactNode;
   value?: string;
   rows?: number;
+  fullWidth?: boolean;
 }
 
-const TextField: FC<TextFieldProps> = ({ multiline = false, icon, value, ...props }) => {
+const TextField: FC<TextFieldProps> = ({
+  multiline = false,
+  icon,
+  value,
+  fullWidth = false,
+  ...props
+}) => {
   if (!multiline) {
     return (
-      <Container>
+      <Container fullWidth={fullWidth}>
         {icon && <IconContainer>{icon}</IconContainer>}
         <Input value={value} {...props} />
       </Container>
     );
   }
   return (
-    <Container>
+    <Container fullWidth={fullWidth}>
       {icon && <IconContainer>{icon}</IconContainer>}
       <Textarea value={value} {...props}></Textarea>
     </Container>

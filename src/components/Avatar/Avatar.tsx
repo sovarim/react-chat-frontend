@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
+import 'react-perfect-scrollbar/dist/css/styles.css';
 
 interface AvatarRootProps {
   isSmall?: boolean;
@@ -8,6 +9,7 @@ interface AvatarRootProps {
 interface AvatarProps extends AvatarRootProps {
   imgSrc?: string;
   className?: string;
+  alt?: string;
 }
 
 const AvatarRoot = styled.div<AvatarRootProps>`
@@ -31,10 +33,10 @@ const AvatarImage = styled.img`
   object-position: center;
 `;
 
-const Avatar: FC<AvatarProps> = ({ imgSrc, isSmall, className }) => {
+const Avatar: FC<AvatarProps> = ({ imgSrc, isSmall, className, alt }) => {
   return (
     <AvatarRoot className={className} isSmall={isSmall}>
-      {(imgSrc && <AvatarImage src={imgSrc} />) || 'A'}
+      {(imgSrc && <AvatarImage src={imgSrc} />) || alt}
     </AvatarRoot>
   );
 };

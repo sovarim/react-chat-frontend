@@ -1,9 +1,6 @@
 import React, { FC } from 'react';
 import styled from 'styled-components';
-
-interface MainLayoutProps {
-  children?: React.ReactNode | React.ReactChildren;
-}
+import { Outlet } from 'react-router-dom';
 
 const Root = styled.div`
   position: relative;
@@ -38,7 +35,6 @@ const Wrapper = styled.div`
   flex: 1 1 auto;
   max-width: 1440px;
   min-height: 100%;
-  padding: 0 0.5rem;
   display: flex;
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadows[0]};
@@ -50,11 +46,13 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const MainLayout: FC<MainLayoutProps> = ({ children }) => {
+const MainLayout: FC = () => {
   return (
     <Root>
       <Wrapper>
-        <Container>{children}</Container>
+        <Container>
+          <Outlet />
+        </Container>
       </Wrapper>
     </Root>
   );
