@@ -1,6 +1,7 @@
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import { TextField, Icon, ChatList, ChatListItem, Message } from 'components';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 const chats = [
   {
@@ -129,6 +130,7 @@ const MessagesSection = styled.section`
 const MessagesContainer = styled.div`
   width: 100%;
   flex-grow: 1;
+  flex-shrink: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -136,14 +138,27 @@ const MessagesContainer = styled.div`
 `;
 
 const MessageInputContainer = styled.div`
-  height: 60px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 0 1rem;
+  padding: 1.15rem 1rem;
 `;
 
 const Home = () => {
+  const [active, setActive] = useState<number>(0);
+  const [message, setMessage] = useState<string>('');
+  const [messages, setMessages] = useState<string[]>([]);
+
+  const onChange = (e: any) => {
+    setMessage(e.target.value);
+  };
+
+  const addMessage = () => {
+    setMessages([...messages, message]);
+    setMessage('');
+  };
+
   return (
     <HomeRoot>
       <ChatListSection>
@@ -153,20 +168,37 @@ const Home = () => {
         <ChatListContainer>
           <ChatList>
             {chats.map((props, idx) => (
-              <ChatListItem key={idx} {...props} />
+              <ChatListItem
+                as="button"
+                isActive={active === idx}
+                onClick={() => setActive(idx)}
+                key={idx}
+                {...props}
+              />
             ))}
           </ChatList>
         </ChatListContainer>
       </ChatListSection>
       <MessagesSection>
         <MessagesContainer>
-          <Message>Ассаламу 1алайкум</Message>
-          <Message>Муха ву хьо?</Message>
-          <Message isMe>Ва1алайкум ассалам</Message>
-          <Message isMe>дика ву</Message>
+          {messages.map((message, idx) => (
+            <Message key={idx} isMe>
+              {message}
+            </Message>
+          ))}
         </MessagesContainer>
         <MessageInputContainer>
-          <TextField fullWidth multiline placeholder="Введите сообщение" />
+          <TextField
+            fullWidth
+            multiline
+            placeholder="Введите сообщение"
+            value={message}
+            onChange={onChange}
+            maxRows={7}
+          />
+          <button style={{ marginLeft: 8 }} onClick={addMessage}>
+            отправить
+          </button>
         </MessageInputContainer>
       </MessagesSection>
     </HomeRoot>

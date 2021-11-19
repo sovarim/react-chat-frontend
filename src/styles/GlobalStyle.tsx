@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
 
-  *, ::before, ::after {
+  *, *::before, *::after {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
   }
@@ -12,9 +12,14 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
   }
 
+  *:active, *:hover, *:focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
   html {
     width: 100%;
-    height: 100vh;
+    height: 100%;
   }
 
   body {

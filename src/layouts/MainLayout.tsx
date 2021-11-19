@@ -34,7 +34,7 @@ const Root = styled.div`
 const Wrapper = styled.div`
   flex: 1 1 auto;
   max-width: 1440px;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   overflow: hidden;
   box-shadow: ${({ theme }) => theme.shadows[0]};

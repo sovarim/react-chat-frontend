@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { css } from 'styled-components/macro';
 import { ItemRoot, DetailContainer, LastMessage } from './ChatListItem.styles';
+import { IntrinsicElementsKeys } from 'styled-components';
 import Text from '../Text/Text';
 import Avatar from '../Avatar/Avatar';
 
@@ -9,6 +10,8 @@ interface ChatListItemProps {
   lastMessage?: string;
   isActive?: boolean;
   avatarSrc?: string;
+  as?: IntrinsicElementsKeys;
+  onClick?: () => void;
 }
 
 const ChatListItem: FC<ChatListItemProps> = ({
@@ -16,9 +19,11 @@ const ChatListItem: FC<ChatListItemProps> = ({
   lastMessage,
   isActive = false,
   avatarSrc,
+  as = 'div',
+  onClick,
 }) => {
   return (
-    <ItemRoot isActive={isActive}>
+    <ItemRoot isActive={isActive} as={as} onClick={onClick}>
       <Avatar
         css={css`
           margin: 0 0.75rem;

@@ -9,16 +9,28 @@ export const ItemRoot = styled.div<ItemRootProps>`
   display: flex;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.1s ease-in-out;
+  transition: all .2s ease-in-out;
   padding: 0.5rem 0;
+  border: none;
+  text-align: left;
+  background-color: transparent;
+  cursor: pointer;
+  width: 100%;
+  user-select: none;
+  touch-action: none;
   ${({ isActive, theme }) =>
     isActive &&
     css`
       background: ${theme.colors.primary.main}24;
     `}
-  &:hover {
+
+  }
+  @media (hover) {
+    &:hover {
     background: ${({ theme }) => theme.colors.primary.main}24;
   }
+  
+}
 `;
 
 export const DetailContainer = styled.div`
