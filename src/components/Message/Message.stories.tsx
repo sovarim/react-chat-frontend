@@ -16,6 +16,8 @@ const Template: ComponentStory<typeof Message> = (args) => {
         width: 100%;
         max-width: 600px;
         border-radius: 0.25rem;
+        box-shadow: -2px 4px 8px 0px rgba(34, 60, 80, 0.2);
+        margin-bottom: 2rem;
       `}
     >
       <Message {...args} />
