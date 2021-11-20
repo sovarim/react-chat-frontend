@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { Container, LoginForm } from 'components';
+import { Container } from 'components';
 import styled from 'styled-components';
 
 const StyledContainer = styled(Container)`
@@ -15,9 +15,7 @@ const Section = styled.section`
 const Login: FC = () => {
   return (
     <StyledContainer fullHeight>
-      <Section>
-        <LoginForm />
-      </Section>
+      <Section></Section>
     </StyledContainer>
   );
 };

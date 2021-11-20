@@ -18,6 +18,7 @@ const Root = styled.div`
     background: ${({ theme }) =>
       `linear-gradient(${theme.colors.primary.light} 0%, ${theme.colors.primary.main} 100%)`};
     top: 0;
+    box-shadow: ${({ theme }) => theme.shadows[0]};
     left: 0;
     z-index: -1;
   }

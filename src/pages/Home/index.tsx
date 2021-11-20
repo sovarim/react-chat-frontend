@@ -1,7 +1,18 @@
-import styled from 'styled-components/macro';
-import { TextField, Icon, ChatList, ChatListItem, Message } from 'components';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import styled, { css } from 'styled-components/macro';
+import {
+  TextField,
+  Icon,
+  ChatList,
+  ChatListItem,
+  Message,
+  Container,
+  IconButton,
+  Avatar,
+  Text,
+} from 'components';
+import { faSearch, faShare } from '@fortawesome/free-solid-svg-icons';
 import { useState } from 'react';
+import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const chats = [
   {
@@ -95,16 +106,10 @@ const chats = [
   },
 ];
 
-const HomeRoot = styled.div`
-  display: flex;
-  width: 100%;
-  height: 100%;
-`;
-
 const ChatListSection = styled.section`
-  flex-grow: 1;
-  flex-shrink: 1;
-  max-width: 400px;
+  flex: 1 1 28%;
+  max-width: 28%;
+  min-width: 320px;
   box-shadow: 1px 0px 3px 0px rgba(34, 60, 80, 0.2);
   position: relative;
   z-index: 10;
@@ -121,16 +126,25 @@ const ChatListContainer = styled.div`
 
 const MessagesSection = styled.section`
   flex-grow: 1;
+  flex-shrink: 1;
   height: 100%;
   background-color: #e5ddd5ba;
   display: flex;
   flex-direction: column;
 `;
 
+const MessagesHeader = styled.div`
+  display: flex;
+  flex-shrink: 0;
+  height: 45px;
+  align-items: center;
+  padding: 0 0.75rem;
+  background-color: ${({ theme }) => theme.colors.background};
+`;
+
 const MessagesContainer = styled.div`
+  flex: 1 1 auto;
   width: 100%;
-  flex-grow: 1;
-  flex-shrink: 1;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
@@ -155,12 +169,13 @@ const Home = () => {
   };
 
   const addMessage = () => {
+    if (!message) return;
     setMessages([...messages, message]);
     setMessage('');
   };
 
   return (
-    <HomeRoot>
+    <Container fullHeight display="flex">
       <ChatListSection>
         <SearchBoxContainer>
           <TextField fullWidth placeholder="Поиск" icon={<Icon icon={faSearch} size="xs" />} />
@@ -180,13 +195,41 @@ const Home = () => {
         </ChatListContainer>
       </ChatListSection>
       <MessagesSection>
-        <MessagesContainer>
-          {messages.map((message, idx) => (
-            <Message key={idx} isMe>
-              {message}
-            </Message>
-          ))}
-        </MessagesContainer>
+        <MessagesHeader>
+          <Avatar
+            isSmall
+            imgSrc="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.naAZE2Vx6EidFLMoWMbYtQAAAA%26pid%3DApi&f=1"
+          />
+          <div
+            css={css`
+              padding-left: 0.75rem;
+            `}
+          >
+            <Text
+              variant="text2"
+              as="span"
+              css={css`
+                line-height: 0.4rem;
+                display: block;
+                padding-top: 0.25rem;
+              `}
+            >
+              Sovarim
+            </Text>
+            <Text as="span" variant="caption" light fontWeight={400}>
+              в сети
+            </Text>
+          </div>
+        </MessagesHeader>
+        <PerfectScrollbar>
+          <MessagesContainer>
+            {messages.map((message, idx) => (
+              <Message key={idx} isMe>
+                {message}
+              </Message>
+            ))}
+          </MessagesContainer>
+        </PerfectScrollbar>
         <MessageInputContainer>
           <TextField
             fullWidth
@@ -196,12 +239,18 @@ const Home = () => {
             onChange={onChange}
             maxRows={7}
           />
-          <button style={{ marginLeft: 8 }} onClick={addMessage}>
-            отправить
-          </button>
+          <div
+            css={css`
+              padding-left: 0.5rem;
+            `}
+          >
+            <IconButton onClick={addMessage}>
+              <Icon icon={faShare} size="lg" />
+            </IconButton>
+          </div>
         </MessageInputContainer>
       </MessagesSection>
-    </HomeRoot>
+    </Container>
   );
 };
 

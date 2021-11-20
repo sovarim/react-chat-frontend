@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export interface TextProps {
-  variant?: 'text' | 'text2' | 'h1' | 'h2' | 'h3';
+  variant?: 'text' | 'text2' | 'h1' | 'h2' | 'h3' | 'caption';
   fontWeight?: number;
   light?: boolean;
 }

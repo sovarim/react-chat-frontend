@@ -21,6 +21,7 @@ export const Textarea = styled(TextareaAutosize)`
   resize: none;
   font-size: 0.875rem;
   width: 100%;
+  min-height: 21px;
   &::placeholder {
     color: ${({ theme }) => theme.colors.label};
     font-size: inherit;

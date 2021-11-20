@@ -19,6 +19,7 @@ export interface ITypography {
   h3: string;
   text: string;
   text2: string;
+  caption: string;
 }
 
 export interface IShape {
