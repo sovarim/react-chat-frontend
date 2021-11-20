@@ -20,8 +20,8 @@ const GlobalStyle = createGlobalStyle`
   html {
     width: 100%;
     height: 100%;
-    ${({ theme }) => theme.breakpoints.tablet} {
-      font-size: 14px;
+    ${({ theme }) => theme.breakpoints.mobile} {
+      font-size: 15px;
     }
   }
 

@@ -1,26 +1,26 @@
 import { FC, useState, MouseEvent } from 'react';
 import styled, { css } from 'styled-components/macro';
-import { Container } from 'components';
+import { Container, Tabs } from 'components';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
-const Tabs = styled.div`
-  display: flex;
-  justify-content: center;
-  position: relative;
-  &::after {
-    content: '';
-    position: absolute;
-    height: 0.125rem;
-    width: 50%;
-    bottom: 0;
-    left: 0%;
-    transition: all 0.3s ease-out;
-    background: ${({ theme }) => theme.colors.primary.main};
-  }
-`;
+// const Tabs = styled.div`
+//   display: flex;
+//   justify-content: center;
+//   position: relative;
+//   &::after {
+//     content: '';
+//     position: absolute;
+//     height: 0.125rem;
+//     width: 50%;
+//     bottom: 0;
+//     left: 0;
+//     transition: all 0.3s ease-out;
+//     background: ${({ theme }) => theme.colors.primary.main};
+//   }
+// `;
 
-const Tab = styled.button<{ isActive?: boolean }>`
+const Tab = styled.button`
   flex: 1 1 50%;
   border: none;
   padding: 0.5rem 1rem;
@@ -39,23 +39,15 @@ const Tab = styled.button<{ isActive?: boolean }>`
 const TabPanel = styled.div`
   padding: 1rem;
   background: ${({ theme }) => theme.colors.background};
+  transition: all 0.2s linear;
+  flex: 0;
+  height: auto;
+  overflow: hidden;
 `;
 
 const Login: FC = () => {
-  const [activeTab, setActiveTab] = useState<string | number>(0);
-
-  const onActiveTabChange = (e: MouseEvent<HTMLButtonElement>) => {
-    setActiveTab(e.currentTarget.dataset?.idx || 1);
-  };
-
   return (
-    <Container
-      fullHeight
-      display="flex"
-      css={css`
-        padding: 0.5rem;
-      `}
-    >
+    <Container fullHeight display="flex">
       <Container
         maxWidth={600}
         verticalCenter
@@ -65,21 +57,11 @@ const Login: FC = () => {
           box-shadow: ${({ theme }) => theme.shadows[0]};
         `}
       >
-        <Tabs
-          css={css`
-            &::after {
-              left: ${`calc(${activeTab} * 50%)`};
-            }
-          `}
-        >
-          <Tab isActive data-idx={0} onClick={onActiveTabChange}>
-            Авторизация
-          </Tab>
-          <Tab data-idx={1} onClick={onActiveTabChange}>
-            Регистрация
-          </Tab>
+        <Tabs>
+          <Tab>Авторизация</Tab>
+          <Tab>Регистрация</Tab>
         </Tabs>
-        <TabPanel>{(activeTab == 0 && <LoginForm />) || <RegisterForm />}</TabPanel>
+        <TabPanel>{(0 == 0 && <LoginForm />) || <RegisterForm />}</TabPanel>
       </Container>
     </Container>
   );

@@ -9,6 +9,7 @@ import ChatList from './ChatList/ChatList';
 import ChatListItem from './ChatListItem/ChatListItem';
 import Message from './Message/Message';
 import IconButton from './IconButton';
+import Tabs from './Tabs/Tabs';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   ChatListItem,
   Message,
   IconButton,
+  Tabs,
 };
