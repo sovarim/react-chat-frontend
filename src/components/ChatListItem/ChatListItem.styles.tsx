@@ -9,7 +9,7 @@ export const ItemRoot = styled.div<ItemRootProps>`
   display: flex;
   overflow: hidden;
   cursor: pointer;
-  transition: all .2s ease-in-out;
+  transition: all .1s ease-in-out;
   padding: 0.5rem 0;
   border: none;
   text-align: left;
@@ -21,13 +21,13 @@ export const ItemRoot = styled.div<ItemRootProps>`
   ${({ isActive, theme }) =>
     isActive &&
     css`
-      background: ${theme.colors.primary.main}24;
+      background: ${theme.colors.primary.main}24 !important;
     `}
 
   }
   @media (hover) {
     &:hover {
-    background: ${({ theme }) => theme.colors.primary.main}24;
+    background: rgba(8, 8, 8, 0.027);
   }
   
 }

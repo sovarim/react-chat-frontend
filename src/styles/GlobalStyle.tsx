@@ -6,6 +6,7 @@ const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;
+    -webkit-tap-highlight-color: transparent;
   }
 
   *:visited {
@@ -13,13 +14,15 @@ const GlobalStyle = createGlobalStyle`
   }
 
   *:active, *:hover, *:focus {
-    outline: 0;
-    outline-offset: 0;
+    outline: none;
 }
 
   html {
     width: 100%;
     height: 100%;
+    ${({ theme }) => theme.breakpoints.tablet} {
+      font-size: 14px;
+    }
   }
 
   body {

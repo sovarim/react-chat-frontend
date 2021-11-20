@@ -1,3 +1,4 @@
+import { FC, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
 import {
   TextField,
@@ -11,7 +12,6 @@ import {
   Text,
 } from 'components';
 import { faSearch, faShare } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 const chats = [
@@ -110,14 +110,22 @@ const ChatListSection = styled.section`
   flex: 1 1 28%;
   max-width: 28%;
   min-width: 320px;
+  height: 100%;
+  background: ${({ theme }) => theme.colors.white};
   box-shadow: 1px 0px 3px 0px rgba(34, 60, 80, 0.2);
   position: relative;
-  z-index: 10;
+  z-index: 100;
+  ${({ theme }) => theme.breakpoints.tablet} {
+    position: absolute;
+  }
 `;
 
 const SearchBoxContainer = styled.div`
   background-color: ${({ theme }) => theme.colors.background};
-  padding: 0.5rem 1rem;
+  padding: 0 1rem;
+  height: 45px;
+  display: flex;
+  align-items: center;
 `;
 
 const ChatListContainer = styled.div`
@@ -159,7 +167,7 @@ const MessageInputContainer = styled.div`
   padding: 1.15rem 1rem;
 `;
 
-const Home = () => {
+const Home: FC = () => {
   const [active, setActive] = useState<number>(0);
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<string[]>([]);
@@ -175,10 +183,16 @@ const Home = () => {
   };
 
   return (
-    <Container fullHeight display="flex">
+    <Container
+      fullHeight
+      display="flex"
+      css={css`
+        position: relative;
+      `}
+    >
       <ChatListSection>
         <SearchBoxContainer>
-          <TextField fullWidth placeholder="Поиск" icon={<Icon icon={faSearch} size="xs" />} />
+          <TextField fullWidth placeholder="Поиск" startIcon={<Icon icon={faSearch} size="xs" />} />
         </SearchBoxContainer>
         <ChatListContainer>
           <ChatList>

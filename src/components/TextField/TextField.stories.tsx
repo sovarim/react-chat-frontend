@@ -20,7 +20,7 @@ Input.args = {
 export const WithIcon = Template.bind({});
 WithIcon.args = {
   placeholder: 'Поиск',
-  icon: <Icon icon={faSearch} size="xs" />,
+  startIcon: <Icon icon={faSearch} size="xs" />,
 };
 
 export const Multiline = Template.bind({});

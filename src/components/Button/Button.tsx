@@ -11,7 +11,7 @@ const Button = styled.button.attrs<ButtonProps>((props) => ({
 }))<ButtonProps>`
   background: ${({ theme, color }) => color && theme.colors[color].main};
   border: none;
-  padding: 0.75rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: 0.875rem;
   color: #fff;
   border-radius: 0.25rem;

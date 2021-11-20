@@ -41,7 +41,12 @@ export const Container = styled.div<{ fullWidth: boolean }>`
 `;
 
 export const IconContainer = styled.span`
-  margin-right: 0.5rem;
+  &:first-child {
+    margin-right: 0.5rem;
+  }
+  &:last-child {
+    margin-left: 0.5rem;
+  }
   display: inline-flex;
   align-items: center;
 `;

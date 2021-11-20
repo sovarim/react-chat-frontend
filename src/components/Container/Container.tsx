@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Property } from 'csstype';
 
 interface ContainerProps {
@@ -6,6 +6,8 @@ interface ContainerProps {
   maxWidth?: number;
   fullHeight?: boolean;
   display?: Property.Display;
+  verticalCenter?: boolean;
+  horizontalCenter?: boolean;
 }
 
 const Container = styled.div<ContainerProps>`
@@ -14,6 +16,18 @@ const Container = styled.div<ContainerProps>`
   max-width: ${({ maxWidth }) => (maxWidth ? `${maxWidth}px` : '100%')};
   overflow: ${({ isScroll }) => (isScroll ? 'auto' : 'hidden')};
   display: ${({ display }) => display || 'block'};
+  ${({ verticalCenter }) =>
+    verticalCenter &&
+    css`
+      margin-top: auto;
+      margin-bottom: auto;
+    `}
+  ${({ horizontalCenter }) =>
+    horizontalCenter &&
+    css`
+      margin-left: auto;
+      margin-right: auto;
+    `}
 `;
 
 export default Container;

@@ -1,12 +1,13 @@
-import React, { FC, HTMLAttributes } from 'react';
+import React, { FC, InputHTMLAttributes } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 import { Input, Container, IconContainer, Textarea } from './TextField.styles';
 
-type HTMLProps = HTMLAttributes<HTMLInputElement> & TextareaAutosizeProps;
+type HTMLProps = TextareaAutosizeProps & InputHTMLAttributes<HTMLInputElement>;
 
 interface TextFieldProps extends HTMLProps {
   multiline?: boolean;
-  icon?: React.ReactChildren | React.ReactNode;
+  startIcon?: React.ReactElement;
+  endIcon?: React.ReactElement;
   value?: string;
   rows?: number;
   fullWidth?: boolean;
@@ -14,23 +15,27 @@ interface TextFieldProps extends HTMLProps {
 
 const TextField: FC<TextFieldProps> = ({
   multiline = false,
-  icon,
+  startIcon,
+  endIcon,
   value,
   fullWidth = false,
+  type,
   ...props
 }) => {
   if (!multiline) {
     return (
       <Container fullWidth={fullWidth}>
-        {icon && <IconContainer>{icon}</IconContainer>}
-        <Input value={value} {...props} />
+        {startIcon && <IconContainer>{startIcon}</IconContainer>}
+        <Input value={value} type={type} {...props} />
+        {endIcon && <IconContainer>{endIcon}</IconContainer>}
       </Container>
     );
   }
   return (
     <Container fullWidth={fullWidth}>
-      {icon && <IconContainer>{icon}</IconContainer>}
+      {startIcon && <IconContainer>{startIcon}</IconContainer>}
       <Textarea value={value} {...props}></Textarea>
+      {endIcon && <IconContainer>{endIcon}</IconContainer>}
     </Container>
   );
 };

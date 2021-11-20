@@ -1,5 +1,5 @@
 import MainLayout from 'layouts/MainLayout';
-import { Login, Home } from 'pages';
+import { Auth, Home } from 'pages';
 import { Navigate } from 'react-router';
 
 const routes = [
@@ -8,7 +8,7 @@ const routes = [
     element: <MainLayout />,
     children: [
       { path: '', element: <Home /> },
-      { path: 'login', element: <Login /> },
+      { path: 'auth', element: <Auth /> },
       { path: '*', element: <Navigate to="/" /> },
     ],
   },

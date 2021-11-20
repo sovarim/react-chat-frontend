@@ -14,8 +14,8 @@ interface AvatarProps extends AvatarRootProps {
 
 const AvatarRoot = styled.div<AvatarRootProps>`
   display: inline-flex;
-  width: ${({ isSmall }) => (isSmall ? '35px' : '50px')};
-  height: ${({ isSmall }) => (isSmall ? '35px' : '50px')};
+  width: ${({ isSmall }) => (isSmall ? '2.1875rem' : '3.125rem')};
+  height: ${({ isSmall }) => (isSmall ? '2.1875rem' : '3.125rem')};
   justify-content: center;
   align-items: center;
   border-radius: 50%;
