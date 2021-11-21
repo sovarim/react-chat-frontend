@@ -19,21 +19,17 @@ const TabPanels: FC<{ value?: number }> = ({ children, value = 0 }) => {
   };
 
   useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
+    const resizeObserver = new ResizeObserver(() => {
       if (tabPanelsRef.current) {
-        tabPanelsRef.current.style.height = `${entries[0].target.getBoundingClientRect().height}px`;
+        tabPanelsRef.current.style.height = `${getActiveTabHeight()}px`;
       }
     });
 
-    resizeObserver.observe(getChilds()[0]);
+    Object.values(getChilds()).forEach((elem) => {
+      resizeObserver.observe(elem);
+    });
 
     return () => resizeObserver.disconnect();
-  }, []);
-
-  useEffect(() => {
-    if (tabPanelsRef.current) {
-      tabPanelsRef.current.style.height = `${getActiveTabHeight()}px`;
-    }
   }, [value]);
 
   return (

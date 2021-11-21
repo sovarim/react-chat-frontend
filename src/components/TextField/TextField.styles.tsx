@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 import TextareaAutosize from 'react-textarea-autosize';
+import Text from '../Text/Text';
 
 export const Input = styled.input`
   background-color: transparent;
@@ -33,6 +34,7 @@ export const Container = styled.div<{ fullWidth: boolean }>`
   background-color: ${({ theme }) => theme.colors.white};
   border-radius: 20px;
   padding: 4px 12px;
+  position: relative;
   ${({ fullWidth }) =>
     fullWidth &&
     css`
@@ -49,4 +51,16 @@ export const IconContainer = styled.span`
   }
   display: inline-flex;
   align-items: center;
+`;
+
+export const ErrorText = styled(({ children, ...props }) => (
+  <Text {...props} variant="caption">
+    {children}
+  </Text>
+))`
+  color: ${({ theme }) => theme.colors.error};
+  position: absolute;
+  top: 100%;
+  font-size: 0.7rem;
+  padding: 0 0.25rem;
 `;

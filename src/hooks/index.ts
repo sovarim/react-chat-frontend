@@ -1,3 +1,4 @@
 import useBoolean from './useBoolean';
+import useValidationSchema from './useValidationSchema';
 
-export { useBoolean };
+export { useBoolean, useValidationSchema };

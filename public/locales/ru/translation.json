@@ -6,5 +6,10 @@
   "Password": "Пароль",
   "Confirm password": "Подтвердите пароль",
   "Login": "Войти",
-  "required field": "обязательное поле"
+  "Required field": "Заполните поле",
+  "Minimum of 3 characters": "Мининмум 3 символа",
+  "Enter the correct email address": "Введите правильный e-mail",
+  "The password must contain at least 8 characters": "Пароль должен содержать минимум 8 символов",
+  "Passwords must match": "Пароли должны совпадать",
+  "Confirm your password": "Подтвердите пароль"
 }

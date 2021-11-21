@@ -6,5 +6,10 @@
   "Password": "Password",
   "Confirm password": "Confirm password",
   "Login": "Sign in",
-  "required field": "required field"
+  "Required field": "Required field",
+  "Minimum of 3 characters": "Minimum of 3 characters",
+  "Enter the correct email address": "Enter the correct email address",
+  "The password must contain at least 8 characters": "The password must contain at least 8 characters",
+  "Passwords must match": "Passwords must match",
+  "Confirm your password": "Confirm your password"
 }

@@ -11,8 +11,9 @@ const LoginForm: FC = () => {
     <Container
       as="form"
       css={css`
-        & > *:not(:last-child) {
-          margin-bottom: 0.75rem;
+        & > * {
+          margin-top: 0.1rem;
+          margin-bottom: 1rem;
         }
       `}
     >
