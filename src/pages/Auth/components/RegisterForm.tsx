@@ -1,9 +1,10 @@
+import { FC } from 'react';
 import { css } from 'styled-components/macro';
 import { TextField, Container, Icon } from 'components';
 import { faUser, faAt } from '@fortawesome/free-solid-svg-icons';
 import PasswordInput from './PasswordInput';
 
-const RegisterForm = () => {
+const RegisterForm: FC = () => {
   return (
     <Container
       as="form"

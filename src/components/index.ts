@@ -10,6 +10,9 @@ import ChatListItem from './ChatListItem/ChatListItem';
 import Message from './Message/Message';
 import IconButton from './IconButton';
 import Tabs from './Tabs/Tabs';
+import Tab from './Tab/Tab';
+import TabPanels from './TabPanels/TabPanels';
+import TabPanel from './TabPanel/TabPanel';
 
 export {
   Button,
@@ -24,4 +27,7 @@ export {
   Message,
   IconButton,
   Tabs,
+  Tab,
+  TabPanels,
+  TabPanel,
 };

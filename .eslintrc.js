@@ -13,6 +13,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:prettier/recommended',
     'prettier',
@@ -34,7 +35,8 @@ module.exports = {
         endOfLine: 'auto',
       },
     ],
-    'no-unused-vars': 'warn',
+    'no-unused-vars': 'off',
     'react/no-unescaped-entities': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
   },
 };

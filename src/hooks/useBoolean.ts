@@ -1,6 +1,15 @@
 import { useState } from 'react';
 
-const useBoolean = (bool: boolean) => {
+interface IReturnData {
+  state: boolean;
+  toogle: () => void;
+  setFalse: () => void;
+  setTrue: () => void;
+}
+
+type Type = (bool: boolean) => IReturnData;
+
+const useBoolean: Type = (bool) => {
   const [state, setState] = useState<boolean>(bool);
 
   const setFalse = () => {
