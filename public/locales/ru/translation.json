@@ -1,7 +1,10 @@
 {
   "Sign in": "Авторизация",
+  "Sign up": "Регистрация",
   "Username": "Имя пользователя",
+  "E-mail": "E-mail",
   "Password": "Пароль",
+  "Confirm password": "Подтвердите пароль",
   "Login": "Войти",
   "required field": "обязательное поле"
 }

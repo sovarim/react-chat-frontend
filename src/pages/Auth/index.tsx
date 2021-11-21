@@ -1,10 +1,12 @@
 import { FC, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { css } from 'styled-components/macro';
 import { Container, Tabs, Tab, TabPanels, TabPanel } from 'components';
 import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
 const Login: FC = () => {
+  const { t } = useTranslation();
   const [acitveTabValue, setActiveTabValue] = useState<number>(0);
 
   const onChange = (value: number) => {
@@ -12,7 +14,13 @@ const Login: FC = () => {
   };
 
   return (
-    <Container fullHeight display="flex">
+    <Container
+      fullHeight
+      display="flex"
+      css={css`
+        padding: 0.5rem;
+      `}
+    >
       <Container
         maxWidth={600}
         verticalCenter
@@ -24,8 +32,8 @@ const Login: FC = () => {
         `}
       >
         <Tabs value={acitveTabValue} onChange={onChange}>
-          <Tab>Авторизация</Tab>
-          <Tab>Регистрация</Tab>
+          <Tab>{t('Sign in')}</Tab>
+          <Tab>{t('Sign up')}</Tab>
         </Tabs>
         <TabPanels value={acitveTabValue}>
           <TabPanel>

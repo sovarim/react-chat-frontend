@@ -9,13 +9,26 @@ const TabPanelsRoot = styled.div`
 const TabPanels: FC<{ value?: number }> = ({ children, value = 0 }) => {
   const tabPanelsRef = useRef<HTMLDivElement>(null);
 
-  const getActiveTabHeight = () => {
-    const childElems = tabPanelsRef.current?.children;
-    if (childElems) {
-      return childElems[value].getBoundingClientRect().height;
-    }
-    return 0;
+  const getChilds = () => {
+    const childs = tabPanelsRef.current?.children;
+    return childs || [];
   };
+
+  const getActiveTabHeight = () => {
+    return getChilds()[value].getBoundingClientRect().height;
+  };
+
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((entries) => {
+      if (tabPanelsRef.current) {
+        tabPanelsRef.current.style.height = `${entries[0].target.getBoundingClientRect().height}px`;
+      }
+    });
+
+    resizeObserver.observe(getChilds()[0]);
+
+    return () => resizeObserver.disconnect();
+  }, []);
 
   useEffect(() => {
     if (tabPanelsRef.current) {

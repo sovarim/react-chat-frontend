@@ -1,6 +1,5 @@
 import Button from './Button/Button';
 import Text from './Text/Text';
-import Input from './Input/Input';
 import Icon from './Icon/Icon';
 import Container from './Container/Container';
 import Avatar from './Avatar/Avatar';
@@ -16,7 +15,6 @@ import TabPanel from './TabPanel/TabPanel';
 
 export {
   Button,
-  Input,
   Icon,
   Text,
   Container,

@@ -1,10 +1,12 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
 import { css } from 'styled-components/macro';
 import { TextField, Container, Icon } from 'components';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import PasswordInput from './PasswordInput';
 
 const LoginForm: FC = () => {
+  const { t } = useTranslation();
   return (
     <Container
       as="form"
@@ -16,10 +18,11 @@ const LoginForm: FC = () => {
     >
       <TextField
         startIcon={<Icon icon={faUser} size="xs" />}
-        placeholder="Имя пользователя"
+        placeholder={t('Username')}
         fullWidth
+        tabIndex={-1}
       />
-      <PasswordInput placeholder="Пароль" />
+      <PasswordInput placeholder={t('Password')} tabIndex={-1} />
     </Container>
   );
 };

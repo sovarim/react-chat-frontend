@@ -3,7 +3,10 @@ import { initReactI18next } from 'react-i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
 
-const fallbackLng = ['en'];
+const fallbackLng = ['ru'];
+
+let language = window.navigator ? window.navigator.language : 'ru';
+language = language.substr(0, 2).toLowerCase();
 
 i18n
   .use(Backend)
@@ -15,7 +18,7 @@ i18n
       caches: ['cookie'],
     },
     debug: false,
-    lng: 'en',
+    lng: language,
     fallbackLng,
     interpolation: {
       escapeValue: false,
