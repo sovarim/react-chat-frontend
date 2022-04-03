@@ -11,7 +11,7 @@ const PasswordInput: FC<ComponentProps<typeof TextField>> = (props) => {
     <TextField
       startIcon={<Icon icon={faLock} size="xs" />}
       endIcon={
-        <IconButton type="button" onClick={passwordVisible.toogle} disablePadding tabIndex={-1}>
+        <IconButton type="button" onClick={passwordVisible.toogle} disablePadding>
           <Icon
             icon={passwordVisible.state ? faEye : faEyeSlash}
             size="xs"

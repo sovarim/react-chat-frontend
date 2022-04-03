@@ -1,13 +1,22 @@
-import { FC, useRef, useEffect } from 'react';
+import React, { FC, useRef, useEffect } from 'react';
 import styled, { css } from 'styled-components/macro';
+import TabPanel from '../TabPanel/TabPanel';
 
 const TabPanelsRoot = styled.div`
   display: flex;
   transition: all 0.2s linear;
 `;
 
-const TabPanels: FC<{ value?: number }> = ({ children, value = 0 }) => {
+const TabPanels: FC<{ value?: number }> = ({ value = 0, ...props }) => {
   const tabPanelsRef = useRef<HTMLDivElement>(null);
+
+  const children = React.Children.map(props.children, (child, idx) => {
+    if (idx !== value) {
+      // заглушка
+      return <TabPanel />;
+    }
+    return child;
+  });
 
   const getChilds = () => {
     const childs = tabPanelsRef.current?.children;

@@ -38,7 +38,9 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "lint": "yarn eslint . --ext .ts --max-warnings 0 --color",
+    "lint:fix": "yarn eslint . --ext .ts --fix --max-warnings 0 --color"
   },
   "eslintConfig": {
     "extends": [

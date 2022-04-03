@@ -88,6 +88,7 @@ const Messages: FC = () => {
           placeholder="Введите сообщение"
           value={message}
           onChange={onChange}
+          minRows={1}
           maxRows={7}
         />
         <div

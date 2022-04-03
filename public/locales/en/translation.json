@@ -11,5 +11,6 @@
   "Enter the correct email address": "Enter the correct email address",
   "The password must contain at least 8 characters": "The password must contain at least 8 characters",
   "Passwords must match": "Passwords must match",
-  "Confirm your password": "Confirm your password"
+  "Confirm your password": "Confirm your password",
+  "Registration": "Registration"
 }

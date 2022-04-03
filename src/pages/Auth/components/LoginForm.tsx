@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { css } from 'styled-components/macro';
-import { TextField, Container, Icon } from 'components';
+import { TextField, Container, Icon, Button } from 'components';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import PasswordInput from './PasswordInput';
 
@@ -11,7 +11,7 @@ const LoginForm: FC = () => {
     <Container
       as="form"
       css={css`
-        & > * {
+        & > *:not(:last-of-type) {
           margin-top: 0.1rem;
           margin-bottom: 1rem;
         }
@@ -21,9 +21,16 @@ const LoginForm: FC = () => {
         startIcon={<Icon icon={faUser} size="xs" />}
         placeholder={t('Username')}
         fullWidth
-        tabIndex={-1}
       />
-      <PasswordInput placeholder={t('Password')} tabIndex={-1} />
+      <PasswordInput placeholder={t('Password')} />
+      <div
+        css={css`
+          display: flex;
+          justify-content: flex-end;
+        `}
+      >
+        <Button type="submit">{t('Login')}</Button>
+      </div>
     </Container>
   );
 };
