@@ -1,6 +1,5 @@
-import React, { FC } from 'react';
-import styled from 'styled-components';
-import { Outlet } from 'react-router-dom';
+import { FC } from 'react';
+import styled from 'styled-components/macro';
 
 const Root = styled.div`
   position: relative;
@@ -47,13 +46,11 @@ const Container = styled.div`
   height: 100%;
 `;
 
-const MainLayout: FC = () => {
+const MainLayout: FC = ({ children }) => {
   return (
     <Root>
       <Wrapper>
-        <Container>
-          <Outlet />
-        </Container>
+        <Container>{children}</Container>
       </Wrapper>
     </Root>
   );

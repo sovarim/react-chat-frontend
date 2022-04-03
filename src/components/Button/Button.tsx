@@ -27,6 +27,14 @@ const Button = styled.button.attrs<ButtonProps>((props) => ({
   &:hover {
     background: ${({ theme, color }) => color && theme.colors[color].dark};
   }
+  ${({ disabled, theme }) =>
+    disabled &&
+    css`
+      background: ${theme.colors.label};
+      &:hover {
+        background: ${theme.colors.label};
+      }
+    `}
 `;
 
 export default Button;

@@ -12,5 +12,9 @@
   "The password must contain at least 8 characters": "The password must contain at least 8 characters",
   "Passwords must match": "Passwords must match",
   "Confirm your password": "Confirm your password",
-  "Registration": "Registration"
+  "Registration": "Registration",
+  "Invalid username or password": "Invalid username or password",
+  "Username and email already taken": "Username and email already taken",
+  "The email is already taken": "The email is already taken",
+  "The username is already taken": "The username is already taken"
 }

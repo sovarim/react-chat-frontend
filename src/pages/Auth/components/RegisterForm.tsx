@@ -1,11 +1,12 @@
 import { FC } from 'react';
 import { useTranslation } from 'react-i18next';
 import { css } from 'styled-components/macro';
-import { TextField, Container, Icon, Button } from 'components';
+import { TextField, Container, Icon, Button, Text } from 'components';
 import { faUser, faAt } from '@fortawesome/free-solid-svg-icons';
 import PasswordInput from './PasswordInput';
 import { useFormik } from 'formik';
 import { useValidationSchema } from 'hooks';
+import { useRegisterMutation } from 'api/authApi';
 
 interface FormValues {
   username: string;
@@ -17,9 +18,10 @@ interface FormValues {
 const RegisterForm: FC = () => {
   const { t } = useTranslation();
   const validationSchema = useValidationSchema('register');
+  const [register, { isError, isLoading, error }] = useRegisterMutation();
 
-  const { values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting } =
-    useFormik<FormValues>({
+  const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik<FormValues>(
+    {
       initialValues: {
         username: '',
         email: '',
@@ -27,10 +29,11 @@ const RegisterForm: FC = () => {
         confirmPassword: '',
       },
       validationSchema,
-      onSubmit: () => {
-        console.log('');
+      onSubmit: (values) => {
+        register({ username: values.username, password: values.password, email: values.email });
       },
-    });
+    },
+  );
 
   return (
     <Container
@@ -43,6 +46,17 @@ const RegisterForm: FC = () => {
       `}
       onSubmit={handleSubmit}
     >
+      {isError && (
+        <Text
+          variant="caption"
+          css={css`
+            color: ${({ theme }) => theme.colors.error};
+            margin-bottom: 0.5rem;
+          `}
+        >
+          {t('dd')}
+        </Text>
+      )}
       <TextField
         name="username"
         startIcon={<Icon icon={faUser} size="xs" />}
@@ -90,7 +104,9 @@ const RegisterForm: FC = () => {
           justify-content: flex-end;
         `}
       >
-        <Button type="submit">{t('Registration')}</Button>
+        <Button disabled={isLoading} type="submit">
+          {t('Registration')}
+        </Button>
       </div>
     </Container>
   );

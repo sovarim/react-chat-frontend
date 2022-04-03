@@ -12,5 +12,9 @@
   "The password must contain at least 8 characters": "Пароль должен содержать минимум 8 символов",
   "Passwords must match": "Пароли должны совпадать",
   "Confirm your password": "Подтвердите пароль",
-  "Registration": "Регистрация"
+  "Registration": "Регистрация",
+  "Invalid username or password": "Неверное имя пользователя или пароль",
+  "Username and email already taken": "Имя пользователя и email уже заняты",
+  "The email is already taken": "Email уже занят",
+  "The username is already taken": "Имя пользователя уже занято"
 }
