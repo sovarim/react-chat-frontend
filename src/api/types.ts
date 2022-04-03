@@ -14,3 +14,25 @@ export type RegisterResponse = {
 export type RegisterRequest = LoginRequest & {
   email: string;
 };
+
+export type UserResponse = {
+  _id: string;
+  username: string;
+  email: string;
+  lastVisit: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ChatsResponse = {
+  _id: string;
+  users: UserResponse[];
+  lastMessage: {
+    _id: string;
+    chat: string;
+    createdAt: string;
+    text: string;
+    updatedAt: string;
+    user: string;
+  };
+}[];

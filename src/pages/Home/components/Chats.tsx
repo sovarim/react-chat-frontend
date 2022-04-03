@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import { TextField, Icon, ChatList, ChatListItem } from 'components';
 import styled from 'styled-components';
+import { useGetChatsQuery } from 'api/chatApi';
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
@@ -109,7 +110,8 @@ const ChatListContainer = styled.div`
 `;
 
 const Chats: FC = () => {
-  const [active, setActive] = useState<number>(0);
+  const [active, setActive] = useState<string>('');
+  const { data: chats } = useGetChatsQuery();
 
   return (
     <>
@@ -118,13 +120,14 @@ const Chats: FC = () => {
       </SearchBoxContainer>
       <ChatListContainer>
         <ChatList>
-          {chats.map((props, idx) => (
+          {chats?.map((chat) => (
             <ChatListItem
+              key={chat._id}
               as="button"
-              isActive={active === idx}
-              onClick={() => setActive(idx)}
-              key={idx}
-              {...props}
+              isActive={active === chat._id}
+              onClick={() => setActive(chat._id)}
+              chatName={chat.users[1].username}
+              lastMessage={chat.lastMessage.text}
             />
           ))}
         </ChatList>
