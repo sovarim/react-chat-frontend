@@ -6,7 +6,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 const fallbackLng = ['ru'];
 
 let language = window.navigator ? window.navigator.language : 'ru';
-language = language.substr(0, 2).toLowerCase();
+language = language.substring(0, 2).toLowerCase();
 
 i18n
   .use(Backend)
