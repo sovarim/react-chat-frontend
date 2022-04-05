@@ -18,7 +18,7 @@ interface FormValues {
 const RegisterForm: FC = () => {
   const { t } = useTranslation();
   const validationSchema = useValidationSchema('register');
-  const [register, { isError, isLoading, error }] = useRegisterMutation();
+  const [register, { isError, isLoading }] = useRegisterMutation();
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik<FormValues>(
     {

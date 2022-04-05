@@ -1,8 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap');
+import '@fontsource/open-sans';
 
+const GlobalStyle = createGlobalStyle`
   *, *::before, *::after {
     box-sizing: border-box;
     font-family: 'Open Sans', sans-serif;

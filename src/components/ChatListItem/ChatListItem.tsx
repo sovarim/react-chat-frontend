@@ -6,7 +6,7 @@ import Text from '../Text/Text';
 import Avatar from '../Avatar/Avatar';
 
 interface ChatListItemProps {
-  chatName: string;
+  chatName?: string;
   lastMessage?: string;
   isActive?: boolean;
   avatarSrc?: string;
@@ -30,7 +30,7 @@ const ChatListItem: FC<ChatListItemProps> = ({
           flex-shrink: 0;
         `}
         imgSrc={avatarSrc}
-        alt={chatName[0]}
+        alt={chatName?.[0] || ''}
       />
       <DetailContainer>
         <Text variant="text">{chatName}</Text>

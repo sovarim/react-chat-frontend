@@ -6,7 +6,7 @@ import LoginForm from './components/LoginForm';
 import RegisterForm from './components/RegisterForm';
 
 const Login: FC = () => {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [acitveTabValue, setActiveTabValue] = useState<number>(0);
 
   const onChange = (value: number) => {

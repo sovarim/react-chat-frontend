@@ -10,4 +10,5 @@ const authApi = baseApi.injectEndpoints({
 });
 
 export const { useGetChatsQuery } = authApi;
+
 export default authApi;

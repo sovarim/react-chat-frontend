@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { RootState } from 'store';
+import { UserResponse } from './types';
 
 const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -12,7 +13,16 @@ const baseApi = createApi({
       return headers;
     },
   }),
-  endpoints: () => ({}),
+  endpoints: (builder) => ({
+    getUsers: builder.query<UserResponse[], { search?: string }>({
+      query: (params) => ({
+        params,
+        url: 'users',
+      }),
+    }),
+  }),
 });
+
+export const { useGetUsersQuery } = baseApi;
 
 export default baseApi;

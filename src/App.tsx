@@ -10,7 +10,6 @@ import { useAuth } from 'hooks';
 
 const App: FC = () => {
   const { isAuth } = useAuth();
-  console.log('auth');
   return (
     <ThemeProvider theme={light}>
       <GlobalStyle />

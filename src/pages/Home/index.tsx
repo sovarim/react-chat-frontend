@@ -3,6 +3,7 @@ import { Container } from 'components';
 import styled, { css } from 'styled-components/macro';
 import Messages from './components/Messages';
 import Chats from './components/Chats';
+import { useGetMeQuery } from 'api/authApi';
 
 const ChatsSection = styled.section`
   flex: 1 1 28%;
@@ -25,6 +26,8 @@ const MessagesSection = styled.section`
 `;
 
 const Home: FC = () => {
+  const { isLoading } = useGetMeQuery();
+
   return (
     <Container
       fullHeight
@@ -33,12 +36,18 @@ const Home: FC = () => {
         position: relative;
       `}
     >
-      <ChatsSection>
-        <Chats />
-      </ChatsSection>
-      <MessagesSection>
-        <Messages />
-      </MessagesSection>
+      {isLoading ? (
+        'Loading...'
+      ) : (
+        <>
+          <ChatsSection>
+            <Chats />
+          </ChatsSection>
+          <MessagesSection>
+            <Messages />
+          </MessagesSection>
+        </>
+      )}
     </Container>
   );
 };

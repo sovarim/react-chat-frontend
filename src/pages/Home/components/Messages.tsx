@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { TextField, Icon, Message, Avatar, Text, IconButton } from 'components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
@@ -34,7 +34,7 @@ const Messages: FC = () => {
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<string[]>([]);
 
-  const onChange = (e: any) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
 
