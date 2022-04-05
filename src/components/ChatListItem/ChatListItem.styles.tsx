@@ -35,6 +35,7 @@ export const ItemRoot = styled.div<ItemRootProps>`
 
 export const DetailContainer = styled.div`
   max-width: calc(100% - 82px);
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

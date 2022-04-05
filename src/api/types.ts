@@ -22,6 +22,7 @@ export type UserResponse = {
   lastVisit: string;
   createdAt: string;
   updatedAt: string;
+  avatar?: string;
 };
 
 export type ChatsResponse = {

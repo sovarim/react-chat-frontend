@@ -12,7 +12,6 @@ const ChatsSection = styled.section`
   height: 100%;
   background: ${({ theme }) => theme.colors.white};
   box-shadow: 1px 0px 3px 0px rgba(34, 60, 80, 0.2);
-  position: relative;
   z-index: 100;
 `;
 

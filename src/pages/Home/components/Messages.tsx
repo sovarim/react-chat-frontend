@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components/macro';
 import { TextField, Icon, Message, Avatar, Text, IconButton } from 'components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { useAppSelector } from 'store';
+import { selectCurrentChat } from 'store/features/chatSlice';
 
 const MessagesHeader = styled.div`
   display: flex;
@@ -31,6 +33,8 @@ const MessageInputContainer = styled.div`
 `;
 
 const Messages: FC = () => {
+  const currentChat = useAppSelector(selectCurrentChat);
+
   const [message, setMessage] = useState<string>('');
   const [messages, setMessages] = useState<string[]>([]);
 
@@ -43,6 +47,10 @@ const Messages: FC = () => {
     setMessages([...messages, message]);
     setMessage('');
   };
+
+  if (!currentChat) {
+    return <div>Выберите чат</div>;
+  }
 
   return (
     <>

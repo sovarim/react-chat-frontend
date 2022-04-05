@@ -12,6 +12,7 @@ interface ChatListItemProps {
   avatarSrc?: string;
   as?: IntrinsicElementsKeys;
   onClick?: () => void;
+  small?: boolean;
 }
 
 const ChatListItem: FC<ChatListItemProps> = ({
@@ -21,6 +22,7 @@ const ChatListItem: FC<ChatListItemProps> = ({
   avatarSrc,
   as = 'div',
   onClick,
+  small = false,
 }) => {
   return (
     <ItemRoot isActive={isActive} as={as} onClick={onClick}>
@@ -31,16 +33,26 @@ const ChatListItem: FC<ChatListItemProps> = ({
         `}
         imgSrc={avatarSrc}
         alt={chatName?.[0] || ''}
+        isSmall={small}
       />
       <DetailContainer>
-        <Text variant="text">{chatName}</Text>
-        <span
+        <Text
+          variant={!small ? 'text' : 'text2'}
           css={css`
-            display: flex;
+            margin-top: ${!lastMessage ? '5px' : 0};
           `}
         >
-          <LastMessage>{lastMessage}</LastMessage>
-        </span>
+          {chatName}
+        </Text>
+        {lastMessage && (
+          <span
+            css={css`
+              display: flex;
+            `}
+          >
+            <LastMessage>{lastMessage}</LastMessage>
+          </span>
+        )}
       </DetailContainer>
     </ItemRoot>
   );

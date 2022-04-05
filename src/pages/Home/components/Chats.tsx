@@ -1,8 +1,11 @@
-import { FC, useState, useMemo } from 'react';
-import { TextField, Icon, ChatList, ChatListItem } from 'components';
-import styled from 'styled-components';
+import { FC, useState, useMemo, ChangeEvent, useRef } from 'react';
+import { TextField, Icon, ChatList, ChatListItem, Popper, Text } from 'components';
+import styled, { css } from 'styled-components/macro';
 import { useGetChatsQuery } from 'api/chatApi';
 import { useAuth } from 'hooks';
+import { useDebounce, useBoolean, useFocusWithin } from 'ahooks';
+import { useAppSelector, useAppDispatch } from 'store';
+import { selectCurrentChat, setCurrent } from 'store/features/chatSlice';
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useGetUsersQuery } from 'api/baseApi';
@@ -20,9 +23,11 @@ const ChatListContainer = styled.div`
 `;
 
 const Chats: FC = () => {
-  const { data: chats } = useGetChatsQuery();
-  const [active, setActive] = useState<string>('');
   const { me } = useAuth();
+
+  const dispatch = useAppDispatch();
+  const { data: chats } = useGetChatsQuery();
+  const currentChat = useAppSelector(selectCurrentChat);
 
   const transformedChats = useMemo(
     () =>
@@ -33,27 +38,77 @@ const Chats: FC = () => {
       })),
     [chats, me],
   );
+  const handleClickChat = (chatId: string) => {
+    dispatch(setCurrent(chatId));
+  };
 
-  // const [search, setSearch] = useState()
-  const { data: users } = useGetUsersQuery({ search: 's' }, { skip: true });
+  const [search, setSearch] = useState('');
+  const debouncedSearch = useDebounce(search, { wait: 200 });
+  const { data: users } = useGetUsersQuery({ search: debouncedSearch }, { skip: !debouncedSearch });
 
-  console.log(users);
+  const handleSearch = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const searchRef = useRef<HTMLDivElement>(null);
+  const searchBoxRef = useRef<HTMLDivElement>(null);
+  const [searchOpen, searchOpenActions] = useBoolean(false);
+  useFocusWithin(searchBoxRef, {
+    onFocus: searchOpenActions.setTrue,
+    onBlur: searchOpenActions.setFalse,
+  });
 
   return (
     <>
-      <SearchBoxContainer>
-        <TextField fullWidth placeholder="Поиск" startIcon={<Icon icon={faSearch} size="xs" />} />
+      <SearchBoxContainer ref={searchBoxRef}>
+        <TextField
+          fullWidth
+          ref={searchRef}
+          placeholder="Поиск"
+          startIcon={<Icon icon={faSearch} size="xs" />}
+          onChange={handleSearch}
+        />
+        <Popper open={searchOpen} anchorEl={searchRef}>
+          <ChatList>
+            {!!debouncedSearch && users?.length ? (
+              users?.map((user) => (
+                <ChatListItem
+                  small
+                  key={user._id}
+                  as="button"
+                  chatName={user.username}
+                  avatarSrc={user.avatar}
+                  onClick={() => {
+                    console.log('click');
+                  }}
+                />
+              ))
+            ) : (
+              <Text
+                light
+                variant="caption"
+                css={css`
+                  margin-left: 1rem;
+                `}
+              >
+                Пусто...
+              </Text>
+            )}
+          </ChatList>
+        </Popper>
       </SearchBoxContainer>
+
       <ChatListContainer>
         <ChatList>
           {transformedChats?.map((chat) => (
             <ChatListItem
               key={chat._id}
               as="button"
-              isActive={active === chat._id}
-              onClick={() => setActive(chat._id)}
+              isActive={currentChat === chat._id}
               chatName={chat.partner?.username}
               lastMessage={chat.lastMessage.text}
+              onClick={() => handleClickChat(chat._id)}
+              avatarSrc={chat.partner?.avatar}
             />
           ))}
         </ChatList>
