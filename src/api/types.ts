@@ -25,15 +25,17 @@ export type UserResponse = {
   avatar?: string;
 };
 
-export type ChatsResponse = {
+export type Message = {
+  _id: string;
+  chat: string;
+  createdAt: string;
+  text: string;
+  updatedAt: string;
+  user: string;
+};
+export type ChatResponse = {
   _id: string;
   users: UserResponse[];
-  lastMessage: {
-    _id: string;
-    chat: string;
-    createdAt: string;
-    text: string;
-    updatedAt: string;
-    user: string;
-  };
-}[];
+  lastMessage?: Message;
+  messages?: Message[];
+};

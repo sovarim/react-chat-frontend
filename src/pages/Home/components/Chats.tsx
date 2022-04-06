@@ -1,11 +1,17 @@
 import { FC, useState, useMemo, ChangeEvent, useRef } from 'react';
 import { TextField, Icon, ChatList, ChatListItem, Popper, Text } from 'components';
 import styled, { css } from 'styled-components/macro';
-import { useGetChatsQuery } from 'api/chatApi';
 import { useAuth } from 'hooks';
 import { useDebounce, useBoolean, useFocusWithin } from 'ahooks';
 import { useAppSelector, useAppDispatch } from 'store';
-import { selectCurrentChat, setCurrent } from 'store/features/chatSlice';
+import {
+  selectCurrentChat,
+  setCurrentChat,
+  Chat,
+  useGetChatsQuery,
+  useCreateChatMutation,
+  selectAllChats,
+} from 'store/features/chatSlice';
 
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useGetUsersQuery } from 'api/baseApi';
@@ -24,22 +30,23 @@ const ChatListContainer = styled.div`
 
 const Chats: FC = () => {
   const { me } = useAuth();
+  useGetChatsQuery();
 
   const dispatch = useAppDispatch();
-  const { data: chats } = useGetChatsQuery();
+  const chats = useAppSelector(selectAllChats);
   const currentChat = useAppSelector(selectCurrentChat);
 
   const transformedChats = useMemo(
     () =>
-      chats?.map((chat) => ({
+      (chats?.map((chat) => ({
         _id: chat._id,
         lastMessage: chat.lastMessage,
         partner: chat.users.find((user) => user._id !== me?._id),
-      })),
+      })) || []) as Chat[],
     [chats, me],
   );
-  const handleClickChat = (chatId: string) => {
-    dispatch(setCurrent(chatId));
+  const updateCurrentChat = (chat: Chat) => {
+    dispatch(setCurrentChat(chat));
   };
 
   const [search, setSearch] = useState('');
@@ -57,6 +64,16 @@ const Chats: FC = () => {
     onFocus: searchOpenActions.setTrue,
     onBlur: searchOpenActions.setFalse,
   });
+
+  const [createChat] = useCreateChatMutation();
+
+  const handleCreateChat = async (userId: string) => {
+    try {
+      await createChat({ userId }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <>
@@ -79,7 +96,8 @@ const Chats: FC = () => {
                   chatName={user.username}
                   avatarSrc={user.avatar}
                   onClick={() => {
-                    console.log('click');
+                    handleCreateChat(user._id);
+                    searchOpenActions.setFalse();
                   }}
                 />
               ))
@@ -104,10 +122,10 @@ const Chats: FC = () => {
             <ChatListItem
               key={chat._id}
               as="button"
-              isActive={currentChat === chat._id}
+              isActive={currentChat?._id === chat._id}
               chatName={chat.partner?.username}
-              lastMessage={chat.lastMessage.text}
-              onClick={() => handleClickChat(chat._id)}
+              lastMessage={chat.lastMessage?.text}
+              onClick={() => updateCurrentChat(chat)}
               avatarSrc={chat.partner?.avatar}
             />
           ))}

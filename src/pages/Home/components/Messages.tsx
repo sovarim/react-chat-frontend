@@ -4,7 +4,9 @@ import { TextField, Icon, Message, Avatar, Text, IconButton } from 'components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'store';
-import { selectCurrentChat } from 'store/features/chatSlice';
+import { selectCurrentChat, selectChatById } from 'store/features/chatSlice';
+import { useWebSocket } from 'ahooks';
+import { useAuth } from 'hooks';
 
 const MessagesHeader = styled.div`
   display: flex;
@@ -33,19 +35,29 @@ const MessageInputContainer = styled.div`
 `;
 
 const Messages: FC = () => {
+  const { token } = useAuth();
+  const { sendMessage } = useWebSocket(`${process.env.REACT_APP_WS_URL}?token=${token}`);
+
   const currentChat = useAppSelector(selectCurrentChat);
+  const chat = useAppSelector((state) => selectChatById(state, currentChat?._id || ''));
 
   const [message, setMessage] = useState<string>('');
-  const [messages, setMessages] = useState<string[]>([]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
 
-  const addMessage = () => {
+  const handleSendMessage = () => {
     if (!message) return;
-    setMessages([...messages, message]);
-    setMessage('');
+    if (sendMessage) {
+      sendMessage(
+        JSON.stringify({
+          chatId: currentChat?._id,
+          text: message,
+          event: 'message',
+        }),
+      );
+    }
   };
 
   if (!currentChat) {
@@ -73,7 +85,7 @@ const Messages: FC = () => {
               padding-top: 0.25rem;
             `}
           >
-            Sovarim
+            {currentChat.partner?.username}
           </Text>
           <Text as="span" variant="caption" light fontWeight={400}>
             в сети
@@ -82,9 +94,9 @@ const Messages: FC = () => {
       </MessagesHeader>
       <PerfectScrollbar>
         <MessagesContainer>
-          {messages.map((message, idx) => (
-            <Message key={idx} isMe>
-              {message}
+          {chat?.messages?.map((message) => (
+            <Message key={message._id} isMe>
+              {message.text}
             </Message>
           ))}
         </MessagesContainer>
@@ -104,7 +116,7 @@ const Messages: FC = () => {
             padding-left: 0.5rem;
           `}
         >
-          <IconButton onClick={addMessage}>
+          <IconButton onClick={handleSendMessage}>
             <Icon icon={faShare} size="lg" />
           </IconButton>
         </div>
