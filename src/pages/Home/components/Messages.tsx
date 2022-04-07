@@ -1,12 +1,18 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
-import { TextField, Icon, Message, Avatar, Text, IconButton } from 'components';
+import { TextField, Icon, Avatar, Text, IconButton } from 'components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 import { faShare } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'store';
-import { selectCurrentChat, selectChatById } from 'store/features/chatSlice';
-import { useWebSocket } from 'ahooks';
+import {
+  selectCurrentChat,
+  selectChatById,
+  useGetChatMessagesQuery,
+} from 'store/features/chatSlice';
+import { useKeyPress, useUpdateLayoutEffect, useWhyDidYouUpdate } from 'ahooks';
 import { useAuth } from 'hooks';
+import getWebSocket from 'api/getWebSocket';
+import Message from './Message';
 
 const MessagesHeader = styled.div`
   display: flex;
@@ -35,11 +41,15 @@ const MessageInputContainer = styled.div`
 `;
 
 const Messages: FC = () => {
-  const { token } = useAuth();
-  const { sendMessage } = useWebSocket(`${process.env.REACT_APP_WS_URL}?token=${token}`);
-
+  const { token, me } = useAuth();
+  const ws = getWebSocket({ token });
   const currentChat = useAppSelector(selectCurrentChat);
   const chat = useAppSelector((state) => selectChatById(state, currentChat?._id || ''));
+
+  const { isFetching } = useGetChatMessagesQuery(
+    { chatId: currentChat?._id || '' },
+    { skip: !currentChat },
+  );
 
   const [message, setMessage] = useState<string>('');
 
@@ -49,16 +59,39 @@ const Messages: FC = () => {
 
   const handleSendMessage = () => {
     if (!message) return;
-    if (sendMessage) {
-      sendMessage(
-        JSON.stringify({
-          chatId: currentChat?._id,
-          text: message,
-          event: 'message',
-        }),
-      );
+    ws.send(
+      JSON.stringify({
+        chatId: currentChat?._id,
+        text: message,
+        event: 'message',
+      }),
+    );
+    setMessage('');
+    scrollToBottom();
+  };
+
+  const scroll = useRef<HTMLDivElement>();
+  const isScrollUpdated = useRef(false);
+  const scrollToBottom = () => {
+    if (scroll.current) {
+      scroll.current.scrollTo(0, scroll.current.scrollHeight);
     }
   };
+
+  useEffect(() => {
+    if (scroll.current) return;
+    scroll.current = document.querySelector('#messages-scroll') as HTMLDivElement;
+  }, [currentChat]);
+
+  useWhyDidYouUpdate('updated', { chat, currentChat });
+
+  useUpdateLayoutEffect(() => {
+    if (isScrollUpdated.current) {
+      return scrollToBottom();
+    }
+    setTimeout(scrollToBottom);
+    isScrollUpdated.current = true;
+  }, [chat]);
 
   if (!currentChat) {
     return <div>Выберите чат</div>;
@@ -92,24 +125,33 @@ const Messages: FC = () => {
           </Text>
         </div>
       </MessagesHeader>
-      <PerfectScrollbar>
+      <PerfectScrollbar id="messages-scroll">
         <MessagesContainer>
-          {chat?.messages?.map((message) => (
-            <Message key={message._id} isMe>
-              {message.text}
-            </Message>
-          ))}
+          {me &&
+            (!isFetching ? (
+              chat?.messages?.map((messageId) => (
+                <Message key={messageId} id={messageId} authId={me._id} />
+              ))
+            ) : (
+              <>
+                Loading...
+                {chat?.messages?.map((messageId) => (
+                  <Message key={messageId} id={messageId} authId={me._id} />
+                ))}
+              </>
+            ))}
         </MessagesContainer>
       </PerfectScrollbar>
       <MessageInputContainer>
         <TextField
           fullWidth
           multiline
+          id="message-input"
           placeholder="Введите сообщение"
           value={message}
-          onChange={onChange}
           minRows={1}
           maxRows={7}
+          onChange={onChange}
         />
         <div
           css={css`

@@ -14,7 +14,6 @@ export const ItemRoot = styled.div<ItemRootProps>`
   border: none;
   text-align: left;
   background-color: transparent;
-  cursor: pointer;
   width: 100%;
   user-select: none;
   touch-action: none;

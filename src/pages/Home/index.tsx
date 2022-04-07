@@ -6,7 +6,7 @@ import Chats from './components/Chats';
 import { useGetMeQuery } from 'api/authApi';
 
 const ChatsSection = styled.section`
-  flex: 1 1 28%;
+  flex: 0 0 28%;
   max-width: 28%;
   min-width: 320px;
   height: 100%;

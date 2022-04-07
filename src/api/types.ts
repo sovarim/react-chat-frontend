@@ -37,5 +37,5 @@ export type ChatResponse = {
   _id: string;
   users: UserResponse[];
   lastMessage?: Message;
-  messages?: Message[];
+  messages?: string[];
 };

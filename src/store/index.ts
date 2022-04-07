@@ -1,14 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import baseApi from 'api/baseApi';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
-import authReducer from './features/authSlice';
-import chatReducer from './features/chatSlice';
+import auth from './features/authSlice';
+import chat from './features/chatSlice';
+import message from './features/messageSlice';
 
 const store = configureStore({
   reducer: {
+    auth,
+    chat,
+    message,
     [baseApi.reducerPath]: baseApi.reducer,
-    auth: authReducer,
-    chat: chatReducer,
   },
   middleware: (gDM) => gDM().concat(baseApi.middleware),
 });
