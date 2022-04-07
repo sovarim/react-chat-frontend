@@ -161,9 +161,11 @@ const chatSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(setCurrentChat, (state, { payload }) => {
-      state.current = payload;
-    });
+    builder
+      .addCase(setCurrentChat, (state, { payload }) => {
+        state.current = payload;
+      })
+      .addCase('logOut', () => initialState);
   },
 });
 

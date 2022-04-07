@@ -9,7 +9,7 @@ import {
   selectChatById,
   useGetChatMessagesQuery,
 } from 'store/features/chatSlice';
-import { useKeyPress, useUpdateLayoutEffect, useWhyDidYouUpdate } from 'ahooks';
+import { useKeyPress, useUpdateLayoutEffect } from 'ahooks';
 import { useAuth } from 'hooks';
 import getWebSocket from 'api/getWebSocket';
 import Message from './Message';
@@ -52,12 +52,12 @@ const Messages: FC = () => {
   );
 
   const [message, setMessage] = useState<string>('');
-
+  const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
   const onChange = (e: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     setMessage(e.target.value);
   };
 
-  const handleSendMessage = () => {
+  const sendMessage = () => {
     if (!message) return;
     ws.send(
       JSON.stringify({
@@ -70,8 +70,16 @@ const Messages: FC = () => {
     scrollToBottom();
   };
 
+  useKeyPress(
+    'enter',
+    (e) => {
+      e.preventDefault();
+      sendMessage();
+    },
+    { target: inputRef, exactMatch: true },
+  );
+
   const scroll = useRef<HTMLDivElement>();
-  const isScrollUpdated = useRef(false);
   const scrollToBottom = () => {
     if (scroll.current) {
       scroll.current.scrollTo(0, scroll.current.scrollHeight);
@@ -83,14 +91,12 @@ const Messages: FC = () => {
     scroll.current = document.querySelector('#messages-scroll') as HTMLDivElement;
   }, [currentChat]);
 
-  useWhyDidYouUpdate('updated', { chat, currentChat });
-
   useUpdateLayoutEffect(() => {
-    if (isScrollUpdated.current) {
-      return scrollToBottom();
-    }
+    /* в некоторых моментах неправильно определяется scrollHeight для PerfectScrollbar. 
+    Проблема решается если вызвать функцию синхронно и отложенно. 
+    Так как лишних рендеров это всеравно не вызывает, решил оставить. */
+    scrollToBottom();
     setTimeout(scrollToBottom);
-    isScrollUpdated.current = true;
   }, [chat]);
 
   if (!currentChat) {
@@ -115,14 +121,13 @@ const Messages: FC = () => {
             css={css`
               line-height: 0.4rem;
               display: block;
-              padding-top: 0.25rem;
             `}
           >
             {currentChat.partner?.username}
           </Text>
-          <Text as="span" variant="caption" light fontWeight={400}>
+          {/* <Text as="span" variant="caption" light fontWeight={400}>
             в сети
-          </Text>
+          </Text> */}
         </div>
       </MessagesHeader>
       <PerfectScrollbar id="messages-scroll">
@@ -146,6 +151,7 @@ const Messages: FC = () => {
         <TextField
           fullWidth
           multiline
+          inputRef={inputRef}
           id="message-input"
           placeholder="Введите сообщение"
           value={message}
@@ -158,7 +164,7 @@ const Messages: FC = () => {
             padding-left: 0.5rem;
           `}
         >
-          <IconButton onClick={handleSendMessage}>
+          <IconButton onClick={sendMessage}>
             <Icon icon={faShare} size="lg" />
           </IconButton>
         </div>

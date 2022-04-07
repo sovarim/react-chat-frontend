@@ -1,5 +1,15 @@
 import { FC, useState, useMemo, ChangeEvent, useRef } from 'react';
-import { TextField, Icon, ChatList, ChatListItem, Popper, Text } from 'components';
+import {
+  TextField,
+  Icon,
+  ChatList,
+  ChatListItem,
+  Popper,
+  Text,
+  IconButton,
+  Modal,
+  Button,
+} from 'components';
 import styled, { css } from 'styled-components/macro';
 import { useAuth } from 'hooks';
 import { useDebounce, useBoolean, useFocusWithin } from 'ahooks';
@@ -13,7 +23,7 @@ import {
   selectAllChats,
 } from 'store/features/chatSlice';
 
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faPowerOff } from '@fortawesome/free-solid-svg-icons';
 import { useGetUsersQuery } from 'api/baseApi';
 
 const SearchBoxContainer = styled.div`
@@ -75,45 +85,63 @@ const Chats: FC = () => {
     }
   };
 
+  const [modalOpen, modalActions] = useBoolean(false);
+
   return (
     <>
-      <SearchBoxContainer ref={searchBoxRef}>
-        <TextField
-          fullWidth
-          ref={searchRef}
-          placeholder="Поиск"
-          startIcon={<Icon icon={faSearch} size="xs" />}
-          onChange={handleSearch}
-        />
-        <Popper open={searchOpen} anchorEl={searchRef}>
-          <ChatList>
-            {!!debouncedSearch && users?.length ? (
-              users?.map((user) => (
-                <ChatListItem
-                  small
-                  key={user._id}
-                  as="button"
-                  chatName={user.username}
-                  avatarSrc={user.avatar}
-                  onClick={() => {
-                    handleCreateChat(user._id);
-                    searchOpenActions.setFalse();
-                  }}
-                />
-              ))
-            ) : (
-              <Text
-                light
-                variant="caption"
-                css={css`
-                  margin-left: 1rem;
-                `}
-              >
-                Пусто...
-              </Text>
-            )}
-          </ChatList>
-        </Popper>
+      <SearchBoxContainer>
+        <div
+          ref={searchBoxRef}
+          css={css`
+            width: 100%;
+          `}
+        >
+          <TextField
+            fullWidth
+            ref={searchRef}
+            placeholder="Поиск"
+            startIcon={<Icon icon={faSearch} size="xs" />}
+            onChange={handleSearch}
+          />
+
+          <Popper open={searchOpen} anchorEl={searchRef}>
+            <ChatList>
+              {!!debouncedSearch && users?.length ? (
+                users?.map((user) => (
+                  <ChatListItem
+                    small
+                    key={user._id}
+                    as="button"
+                    chatName={user.username}
+                    avatarSrc={user.avatar}
+                    onClick={() => {
+                      handleCreateChat(user._id);
+                      searchOpenActions.setFalse();
+                    }}
+                  />
+                ))
+              ) : (
+                <Text
+                  light
+                  variant="caption"
+                  css={css`
+                    margin-left: 1rem;
+                  `}
+                >
+                  Пусто...
+                </Text>
+              )}
+            </ChatList>
+          </Popper>
+        </div>
+        <IconButton
+          css={css`
+            margin-left: 0.5rem;
+          `}
+          onClick={modalActions.setTrue}
+        >
+          <Icon icon={faPowerOff} size="sm" />
+        </IconButton>
       </SearchBoxContainer>
 
       <ChatListContainer>
@@ -131,6 +159,26 @@ const Chats: FC = () => {
           ))}
         </ChatList>
       </ChatListContainer>
+      <Modal open={modalOpen} onClose={modalActions.setFalse}>
+        <div>
+          <Text variant="text2">Вы действительно хотите выйти?</Text>
+          <div
+            css={css`
+              display: flex;
+              justify-content: flex-end;
+              margin-top: 1rem;
+              & > * {
+                margin-left: 0.5rem;
+              }
+            `}
+          >
+            <Button onClick={() => dispatch({ type: 'logOut' })}>Да</Button>
+            <Button color="secondary" onClick={modalActions.setFalse}>
+              Отмена
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

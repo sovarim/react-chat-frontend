@@ -21,9 +21,19 @@ const initialState: AuthState = {
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setAuthToken: (state, { payload }) => {
+      state.token = payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
+      .addCase('logOut', (state) => {
+        localStorage.removeItem(accessKey);
+        state.isAuth = false;
+        state.token = null;
+        state.me = null;
+      })
       .addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
         localStorage.setItem(accessKey, payload.token);
         state.token = payload.token;
@@ -34,5 +44,7 @@ const authSlice = createSlice({
       });
   },
 });
+
+export const { setAuthToken } = authSlice.actions;
 
 export default authSlice.reducer;

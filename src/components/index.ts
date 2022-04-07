@@ -13,6 +13,7 @@ import Tab from './Tab/Tab';
 import TabPanels from './TabPanels/TabPanels';
 import TabPanel from './TabPanel/TabPanel';
 import Popper from './Popper';
+import Modal from './Modal';
 
 export {
   Button,
@@ -30,4 +31,5 @@ export {
   TabPanels,
   TabPanel,
   Popper,
+  Modal,
 };

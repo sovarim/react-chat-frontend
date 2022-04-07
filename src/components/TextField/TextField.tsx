@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes, forwardRef } from 'react';
+import React, { InputHTMLAttributes, forwardRef, RefObject } from 'react';
 import { TextareaAutosizeProps } from 'react-textarea-autosize';
 import { Input, Container, IconContainer, Textarea, ErrorText } from './TextField.styles';
 
@@ -13,6 +13,7 @@ interface TextFieldProps extends HTMLProps {
   fullWidth?: boolean;
   errorText?: string;
   error?: boolean;
+  inputRef?: RefObject<HTMLInputElement & HTMLTextAreaElement> | null;
 }
 
 const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
@@ -27,6 +28,7 @@ const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
       type,
       error = false,
       errorText,
+      inputRef,
       ...props
     },
     ref,
@@ -35,7 +37,7 @@ const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
       return (
         <Container ref={ref} fullWidth={fullWidth}>
           {startIcon && <IconContainer>{startIcon}</IconContainer>}
-          <Input value={value} type={type} {...props} />
+          <Input ref={inputRef} value={value} type={type} {...props} />
           {endIcon && <IconContainer>{endIcon}</IconContainer>}
           {error && <ErrorText>{errorText}</ErrorText>}
         </Container>
@@ -44,7 +46,7 @@ const TextField = forwardRef<HTMLDivElement, TextFieldProps>(
     return (
       <Container ref={ref} fullWidth={fullWidth}>
         {startIcon && <IconContainer>{startIcon}</IconContainer>}
-        <Textarea value={value} {...props}></Textarea>
+        <Textarea ref={inputRef} value={value} {...props}></Textarea>
         {endIcon && <IconContainer>{endIcon}</IconContainer>}
       </Container>
     );
