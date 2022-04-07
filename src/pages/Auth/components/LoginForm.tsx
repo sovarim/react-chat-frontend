@@ -39,7 +39,7 @@ const LoginForm: FC = () => {
             margin-bottom: 0.5rem;
           `}
         >
-          {t('dd')}
+          {t('Invalid username or password')}
         </Text>
       )}
       <TextField

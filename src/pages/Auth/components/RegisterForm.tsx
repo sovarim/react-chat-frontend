@@ -18,7 +18,7 @@ interface FormValues {
 const RegisterForm: FC = () => {
   const { t } = useTranslation();
   const validationSchema = useValidationSchema('register');
-  const [register, { isError, isLoading }] = useRegisterMutation();
+  const [register, { isError, isLoading, isSuccess, error }] = useRegisterMutation();
 
   const { values, errors, touched, handleChange, handleBlur, handleSubmit } = useFormik<FormValues>(
     {
@@ -54,7 +54,20 @@ const RegisterForm: FC = () => {
             margin-bottom: 0.5rem;
           `}
         >
-          {t('dd')}
+          {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+          {/* @ts-ignore */}
+          {error?.data?.msg && t(error.data.msg)}
+        </Text>
+      )}
+      {isSuccess && (
+        <Text
+          variant="caption"
+          css={css`
+            color: #8cf338;
+            margin-bottom: 0.5rem;
+          `}
+        >
+          Регистрация прошла успешно! Войдите в аккаунт
         </Text>
       )}
       <TextField

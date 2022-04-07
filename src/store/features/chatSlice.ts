@@ -36,28 +36,32 @@ const chatApi = baseApi.injectEndpoints({
           await cacheDataLoaded;
 
           const listener = (e: MessageEvent) => {
-            const data: { event: string; data: Message } = JSON.parse(e.data);
-            const message = data.data;
-            dispatch(addMessage(message));
+            try {
+              const data: { event: string; data: Message } = JSON.parse(e.data);
+              const message = data.data;
+              dispatch(addMessage(message));
 
-            let isChatNotExist = false;
-            updateCachedData((draft) => {
-              const chat = draft.entities[message.chat];
-              if (chat) {
-                chat.lastMessage = message;
-                if (chat.messages) {
-                  chat.messages.push(message._id);
-                } else {
-                  chat.messages = [message._id];
+              let isChatNotExist = false;
+              updateCachedData((draft) => {
+                const chat = draft.entities[message.chat];
+                if (chat) {
+                  chat.lastMessage = message;
+                  if (chat.messages) {
+                    chat.messages.push(message._id);
+                  } else {
+                    chat.messages = [message._id];
+                  }
+                  return;
                 }
-                return;
-              }
-              isChatNotExist = true;
-            });
+                isChatNotExist = true;
+              });
 
-            // если такого чата нет в сторе, запрашиваем из сервера
-            if (isChatNotExist) {
-              dispatch(chatApi.endpoints.getChat.initiate(message.chat));
+              // если такого чата нет в сторе, запрашиваем из сервера
+              if (isChatNotExist) {
+                dispatch(chatApi.endpoints.getChat.initiate(message.chat));
+              }
+            } catch {
+              //pass
             }
           };
           ws.onmessage = listener;
