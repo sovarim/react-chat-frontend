@@ -27,7 +27,8 @@ const Root = styled.div`
   ${({ theme }) => theme.breakpoints.tablet} {
     padding: 0;
     & > div {
-    border-radius: 0;
+      border-radius: 0;
+    }
   }
 `;
 

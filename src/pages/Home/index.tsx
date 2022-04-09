@@ -4,8 +4,11 @@ import styled, { css } from 'styled-components/macro';
 import Messages from './components/Messages';
 import Chats from './components/Chats';
 import { useGetMeQuery } from 'api/authApi';
+import { useAppSelector } from 'store';
+import { selectCurrentChat } from 'store/features/chatSlice';
+import { useBoolean } from 'ahooks';
 
-const ChatsSection = styled.section`
+const ChatsSection = styled.section<{ isOpen: boolean }>`
   flex: 0 0 28%;
   max-width: 28%;
   min-width: 320px;
@@ -13,6 +16,15 @@ const ChatsSection = styled.section`
   background: ${({ theme }) => theme.colors.white};
   box-shadow: 1px 0px 3px 0px rgba(34, 60, 80, 0.2);
   z-index: 100;
+  ${({ theme }) => theme.breakpoints.tablet} {
+    position: fixed;
+    flex: 0 0 100%;
+    max-width: 100%;
+    min-width: 100%;
+    transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
+    transition: transform 0.2s ease-in-out;
+    z-index: 1010;
+  }
 `;
 
 const MessagesSection = styled.section`
@@ -26,6 +38,8 @@ const MessagesSection = styled.section`
 
 const Home: FC = () => {
   const { isLoading } = useGetMeQuery();
+  const currentChat = useAppSelector(selectCurrentChat);
+  const [isOpen, { setTrue, setFalse }] = useBoolean(!currentChat);
 
   return (
     <Container
@@ -39,11 +53,11 @@ const Home: FC = () => {
         'Loading...'
       ) : (
         <>
-          <ChatsSection>
-            <Chats />
+          <ChatsSection isOpen={isOpen}>
+            <Chats onSelect={setFalse} />
           </ChatsSection>
           <MessagesSection>
-            <Messages />
+            <Messages onBack={setTrue} />
           </MessagesSection>
         </>
       )}

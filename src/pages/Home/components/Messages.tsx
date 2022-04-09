@@ -1,8 +1,8 @@
-import { ChangeEvent, FC, KeyboardEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { TextField, Icon, Avatar, Text, IconButton } from 'components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { faShare } from '@fortawesome/free-solid-svg-icons';
+import { faShare, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'store';
 import {
   selectCurrentChat,
@@ -40,7 +40,7 @@ const MessageInputContainer = styled.div`
   padding: 1.15rem 1rem;
 `;
 
-const Messages: FC = () => {
+const Messages = ({ onBack }: { onBack: () => void }) => {
   const { token, me } = useAuth();
   const ws = getWebSocket({ token });
   const currentChat = useAppSelector(selectCurrentChat);
@@ -106,6 +106,14 @@ const Messages: FC = () => {
   return (
     <>
       <MessagesHeader>
+        <IconButton
+          css={css`
+            margin-right: 0.75rem;
+          `}
+          onClick={onBack}
+        >
+          <Icon icon={faArrowLeft} />
+        </IconButton>
         <Avatar
           isSmall
           imgSrc="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.naAZE2Vx6EidFLMoWMbYtQAAAA%26pid%3DApi&f=1"

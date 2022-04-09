@@ -12,7 +12,7 @@ import {
 } from 'components';
 import styled, { css } from 'styled-components/macro';
 import { useAuth } from 'hooks';
-import { useDebounce, useBoolean, useFocusWithin } from 'ahooks';
+import { useDebounce, useBoolean, useFocusWithin, useUpdateEffect } from 'ahooks';
 import { useAppSelector, useAppDispatch } from 'store';
 import {
   selectCurrentChat,
@@ -38,7 +38,7 @@ const ChatListContainer = styled.div`
   height: calc(100% - 45px);
 `;
 
-const Chats: FC = () => {
+const Chats = ({ onSelect }: { onSelect: () => void }) => {
   const { me } = useAuth();
   useGetChatsQuery();
 
@@ -84,6 +84,10 @@ const Chats: FC = () => {
       console.error(error);
     }
   };
+
+  useUpdateEffect(() => {
+    onSelect();
+  }, [currentChat]);
 
   const [modalOpen, modalActions] = useBoolean(false);
 
