@@ -2,7 +2,7 @@ import authApi from 'api/authApi';
 import { createSlice } from '@reduxjs/toolkit';
 import { UserResponse } from 'api/types';
 
-const accessKey = '_chat-access';
+export const accessTokenKey = '_chat-access';
 
 type AuthState = {
   isAuth: boolean;
@@ -10,11 +10,9 @@ type AuthState = {
   me: UserResponse | null;
 };
 
-const token = localStorage.getItem(accessKey);
-
 const initialState: AuthState = {
-  token,
-  isAuth: !!token,
+  token: localStorage.getItem(accessTokenKey),
+  isAuth: !!localStorage.getItem(accessTokenKey),
   me: null,
 };
 
@@ -29,13 +27,13 @@ const authSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase('logOut', (state) => {
-        localStorage.removeItem(accessKey);
+        localStorage.removeItem(accessTokenKey);
         state.isAuth = false;
         state.token = null;
         state.me = null;
       })
       .addMatcher(authApi.endpoints.login.matchFulfilled, (state, { payload }) => {
-        localStorage.setItem(accessKey, payload.token);
+        localStorage.setItem(accessTokenKey, payload.token);
         state.token = payload.token;
         state.isAuth = true;
       })

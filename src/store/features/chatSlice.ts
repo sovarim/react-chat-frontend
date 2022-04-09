@@ -20,7 +20,7 @@ export const setCurrentChat = createAction('chat/setCurrent', (chat: Chat) => ({
   payload: chat,
 }));
 
-const chatApi = baseApi.injectEndpoints({
+export const chatApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getChats: builder.query<EntityState<ChatResponse>, void>({
       query: () => 'chats',
@@ -165,11 +165,9 @@ const chatSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder
-      .addCase(setCurrentChat, (state, { payload }) => {
-        state.current = payload;
-      })
-      .addCase('logOut', () => initialState);
+    builder.addCase(setCurrentChat, (state, { payload }) => {
+      state.current = payload;
+    });
   },
 });
 

@@ -14,9 +14,6 @@ const messageSlice = createSlice({
     addMessage: messageAdapter.addOne,
     upsertMessages: messageAdapter.upsertMany,
   },
-  extraReducers: (builder) => {
-    builder.addCase('logOut', () => initialState);
-  },
 });
 
 export const { addMessage, upsertMessages } = messageSlice.actions;
