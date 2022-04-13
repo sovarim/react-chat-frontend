@@ -2,17 +2,18 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import styled, { css } from 'styled-components/macro';
 import { TextField, Icon, Avatar, Text, IconButton } from 'components';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import { faShare, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faPaperPlane, faFaceGrinWide } from '@fortawesome/free-solid-svg-icons';
 import { useAppSelector } from 'store';
 import {
   selectCurrentChat,
   selectChatById,
   useGetChatMessagesQuery,
 } from 'store/features/chatSlice';
-import { useKeyPress, useUpdateLayoutEffect } from 'ahooks';
+import { useBoolean, useKeyPress, useUpdateLayoutEffect } from 'ahooks';
 import { useAuth } from 'hooks';
 import getWebSocket from 'api/getWebSocket';
 import Message from './Message';
+import EmojiPicker, { IEmojiData } from 'emoji-picker-react';
 
 const MessagesHeader = styled.div`
   display: flex;
@@ -38,6 +39,7 @@ const MessageInputContainer = styled.div`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.background};
   padding: 1.15rem 1rem;
+  position: relative;
 `;
 
 const Messages = ({ onBack }: { onBack: () => void }) => {
@@ -45,6 +47,7 @@ const Messages = ({ onBack }: { onBack: () => void }) => {
   const ws = getWebSocket({ token });
   const currentChat = useAppSelector(selectCurrentChat);
   const chat = useAppSelector((state) => selectChatById(state, currentChat?._id || ''));
+  const [showEmojies, { toggle: toggleShowEmojies }] = useBoolean(false);
 
   const { isFetching } = useGetChatMessagesQuery(
     { chatId: currentChat?._id || '' },
@@ -55,6 +58,10 @@ const Messages = ({ onBack }: { onBack: () => void }) => {
   const inputRef = useRef<HTMLInputElement & HTMLTextAreaElement>(null);
   const onChange = (e: ChangeEvent<HTMLInputElement & HTMLTextAreaElement>) => {
     setMessage(e.target.value);
+  };
+
+  const handleEmojiClick = (_e: React.MouseEvent<Element, MouseEvent>, emojiData: IEmojiData) => {
+    setMessage((prev) => `${prev}${emojiData.emoji}`);
   };
 
   const sendMessage = () => {
@@ -109,6 +116,10 @@ const Messages = ({ onBack }: { onBack: () => void }) => {
         <IconButton
           css={css`
             margin-right: 0.75rem;
+            display: none;
+            ${({ theme }) => theme.breakpoints.tablet} {
+              display: block;
+            }
           `}
           onClick={onBack}
         >
@@ -156,6 +167,22 @@ const Messages = ({ onBack }: { onBack: () => void }) => {
         </MessagesContainer>
       </PerfectScrollbar>
       <MessageInputContainer>
+        <EmojiPicker
+          onEmojiClick={handleEmojiClick}
+          pickerStyle={{
+            position: 'absolute',
+            top: '-320px',
+            display: showEmojies ? 'flex' : 'none',
+          }}
+        />
+        <IconButton
+          css={css`
+            margin-right: 0.25rem;
+          `}
+          onClick={toggleShowEmojies}
+        >
+          <Icon icon={faFaceGrinWide} />
+        </IconButton>
         <TextField
           fullWidth
           multiline
@@ -173,7 +200,7 @@ const Messages = ({ onBack }: { onBack: () => void }) => {
           `}
         >
           <IconButton onClick={sendMessage}>
-            <Icon icon={faShare} size="lg" />
+            <Icon icon={faPaperPlane} size="lg" />
           </IconButton>
         </div>
       </MessageInputContainer>
